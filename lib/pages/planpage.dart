@@ -7,7 +7,9 @@ import 'package:app3/models/recipe.dart';
 import 'package:app3/services/auth_service.dart';
 import 'package:app3/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../colors/color_set.dart';
 import '../components/button.dart';
@@ -49,30 +51,37 @@ class PlanPage extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyButton(
-                        onTap: goToRecipe,
-                        title: "Recipes",
-                        width: 170,
-                        left: 0,
-                        right: 5,
-                        color: Colors.white,
-                        textColor: const Color(0xFF4D8BAA),
-                        borderRadius: 10,
-                      ),
-                      MyButton(
-                        onTap: () {
-                          // Handle Favorites button tap
-                        },
-                        title: "Plan",
-                        width: 170,
-                        left: 5,
-                        right: 0,
-                        borderRadius: 10,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: MyButton(
+                            onTap: goToRecipe,
+                            title: "Recipes",
+                            width: 170,
+                            left: 0,
+                            right: 5,
+                            color: Colors.white,
+                            textColor: const Color(0xFF4D8BAA),
+                            borderRadius: 10,
+                          ),
+                        ),
+                        Expanded(
+                          child: MyButton(
+                            onTap: () {
+                              // Handle Favorites button tap
+                            },
+                            title: "Plan",
+                            width: 170,
+                            left: 5,
+                            right: 0,
+                            borderRadius: 10,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
