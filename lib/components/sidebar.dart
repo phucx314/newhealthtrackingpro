@@ -1,14 +1,15 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:app3/auth/plan_or_recipes.dart';
 import 'package:app3/models/plan.dart';
+import 'package:app3/pages/list_chat.dart';
 import 'package:app3/pages/planpage.dart';
 import 'package:app3/pages/recipes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../components/sidebar_item.dart';
 import '../pages/bmi_calculator.dart';
+import '../pages/chat_page.dart';
 import '../pages/dashboard.dart';
 import '../pages/my_account.dart';
 
@@ -26,7 +27,7 @@ class Sidebar extends StatelessWidget {
         child: Column(
           children: [
             // logo app
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Image(
                 image: AssetImage(
@@ -34,7 +35,7 @@ class Sidebar extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
@@ -51,7 +52,7 @@ class Sidebar extends StatelessWidget {
                         color: htaPrimaryColors.shade500),
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
@@ -64,7 +65,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.dashboard,
                     onTap: () => onItemTap(context, index: 0),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -72,7 +73,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.list,
                     onTap: () => onItemTap(context, index: 1),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -80,7 +81,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.bookmark,
                     onTap: () => onItemTap(context, index: 2),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -88,7 +89,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.local_hospital,
                     onTap: () => onItemTap(context, index: 3),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -96,7 +97,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.calculate,
                     onTap: () => onItemTap(context, index: 4),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -118,7 +119,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.logout,
                     onTap: () => {auth.signOut()},
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -126,7 +127,7 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.settings,
                     onTap: () => onItemTap(context, index: 8),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SidebarItem(
@@ -148,24 +149,29 @@ class Sidebar extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Dashboard()));
         break;
       case 1:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const PlanOrRecipe()));
         break;
       case 2:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const PlanOrRecipe()));
         break;
-      // case 3: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
+      case 3:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const ListChat()));
+        break;
+
       case 4:
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BMI()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const BMI()));
         break;
       case 5:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyAccount()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MyAccount()));
         break;
 
       // case 7: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
@@ -11,19 +9,19 @@ class WaterIntake extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Container(
         decoration: BoxDecoration(
           color: htaPrimaryColors.shade50,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [shadow],
         ),
-        padding: EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
         child: Column(
           children: [
             GridView.builder(
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
@@ -32,18 +30,18 @@ class WaterIntake extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 if (index < 3) {
                   // Hiển thị 3 hình A
-                  return Image(
+                  return const Image(
                     image: AssetImage('assets/icons/cup_filled.png'),
                   );
                 } else {
                   // Hiển thị 7 hình B
-                  return Image(
+                  return const Image(
                     image: AssetImage('assets/icons/cup_empty.png'),
                   );
                 }
               }, // đoạn này cần sửa lại theo logic, mới tạm thời cái fe như v đã
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
 

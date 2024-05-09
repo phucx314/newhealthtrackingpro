@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
-import 'sidebar.dart'; // Import your SideBar widget
+import '../components/sidebar.dart'; // Import your SideBar widget
 
 class MyAppBar extends StatelessWidget {
   final VoidCallback? onMenuPressed;
