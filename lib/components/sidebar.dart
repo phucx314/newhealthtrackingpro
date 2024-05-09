@@ -26,6 +26,9 @@ class Sidebar extends StatelessWidget {
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
+            const SizedBox(
+              height: 25,
+            ),
             // logo app
             const Align(
               alignment: Alignment.centerLeft,
@@ -58,48 +61,50 @@ class Sidebar extends StatelessWidget {
 
             // trên
             Expanded(
+              flex: 2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SidebarItem(
                     name: 'Dashboard',
                     icon: Icons.dashboard,
                     onTap: () => onItemTap(context, index: 0),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Plans',
                     icon: Icons.list,
                     onTap: () => onItemTap(context, index: 1),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Recipes',
                     icon: Icons.bookmark,
                     onTap: () => onItemTap(context, index: 2),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Dr.Zone (underdev)',
                     icon: Icons.local_hospital,
                     onTap: () => onItemTap(context, index: 3),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'BMI',
                     icon: Icons.calculate,
                     onTap: () => onItemTap(context, index: 4),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Profile',
                     icon: Icons.person_rounded,
@@ -110,32 +115,36 @@ class Sidebar extends StatelessWidget {
             ),
 
             // dưới
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                children: [
-                  SidebarItem(
-                    name: 'Log out',
-                    icon: Icons.logout,
-                    onTap: () => {auth.signOut()},
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SidebarItem(
-                    name: 'Settings',
-                    icon: Icons.settings,
-                    onTap: () => onItemTap(context, index: 8),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SidebarItem(
-                    name: 'Development team',
-                    icon: Icons.info,
-                    onTap: () => onItemTap(context, index: 9),
-                  ),
-                ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SidebarItem(
+                      name: 'Log out',
+                      icon: Icons.logout,
+                      onTap: () => {auth.signOut()},
+                    ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    SidebarItem(
+                      name: 'Settings',
+                      icon: Icons.settings,
+                      onTap: () => onItemTap(context, index: 8),
+                    ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    SidebarItem(
+                      name: 'Development team',
+                      icon: Icons.info,
+                      onTap: () => onItemTap(context, index: 9),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
