@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
 import '../components/appbar.dart';
@@ -197,251 +198,258 @@ class _MyAccountState extends State<MyAccount> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 25, top: 25, right: 25, left: 25),
-                      child: MyAppBar(
-                        username: 'username',
-                      ),
-                    ),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 0, top: 0, right: 25, left: 25),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                shadow,
-                              ],
-                            ),
-                            height: 96,
-                            width: MediaQuery.of(context).size.width,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: const Image(
-                                image: AssetImage(
-                                  'assets/images/cover_pic1.png',
-                                ),
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
-                          ),
+              : SingleChildScrollView(
+                child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 25, top: 25, right: 25, left: 25,
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(25, 96 + 15, 25, 0),
-                          child: Positioned(
-                            top: 96 + 15,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(25),
-                              decoration: BoxDecoration(
-                                color: htaPrimaryColors.shade50,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  shadow,
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'General information',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade500,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Full name',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          fullname,
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Email',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          email ?? '',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Phone number',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          phoneNumber,
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Your age',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          age.toString(),
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Physical health information',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade500,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Height',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          height.toString(),
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Weight',
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          weight.toString(),
-                                          style: TextStyle(
-                                            color: htaPrimaryColors.shade900,
-                                          ),
-                                        ),
-                                      ),
+                        child: MyAppBar(
+                          username: 'username',
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 0, top: 0, right: 25, left: 25),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      shadow,
                                     ],
                                   ),
-                                ],
+                                  height: 96,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: const Image(
+                                      image: AssetImage(
+                                        'assets/images/cover_pic1.png',
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(25, 96 + 15, 25, 0),
+                                child: Positioned(
+                                  top: 96 + 15,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.all(25),
+                                    decoration: BoxDecoration(
+                                      color: htaPrimaryColors.shade50,
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        shadow,
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'General information',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade500,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Full name',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                fullname,
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Email',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                email ?? '',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Phone number',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                phoneNumber,
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Your age',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                age.toString(),
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Physical health information',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade500,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Height',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                height.toString(),
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                'Weight',
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                weight.toString(),
+                                                style: TextStyle(
+                                                  color: htaPrimaryColors.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 30,
+                                left: MediaQuery.of(context).size.width / 2 - 48,
+                                child: Container(
+                                  height: 96,
+                                  width: 96,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(0.5 * 96),
+                                    color: htaPrimaryColors.shade50,
+                                    boxShadow: [
+                                      shadow,
+                                    ],
+                                    border: Border.all(
+                                      width: 5,
+                                      color: htaPrimaryColors.shade50,
+                                    ),
+                                  ),
+                                  child: const CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage('assets/images/avatar1.png'),
+                                    radius: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Button(
+                                onTap: () => showUpdateUserInfoDialog(context, {
+                                  'fullname': fullname,
+                                  'email': email,
+                                  'phoneNumber': phoneNumber,
+                                  'height': height,
+                                  'age': age,
+                                  'weight': weight,
+                                }),
+                                title: 'Edit',
                               ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          top: 30,
-                          left: MediaQuery.of(context).size.width / 2 - 48,
-                          child: Container(
-                            height: 96,
-                            width: 96,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(0.5 * 96),
-                              color: htaPrimaryColors.shade50,
-                              boxShadow: [
-                                shadow,
-                              ],
-                              border: Border.all(
-                                width: 5,
-                                color: htaPrimaryColors.shade50,
-                              ),
-                            ),
-                            child: const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/avatar1.png'),
-                              radius: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Button(
-                          onTap: () => showUpdateUserInfoDialog(context, {
-                            'fullname': fullname,
-                            'email': email,
-                            'phoneNumber': phoneNumber,
-                            'height': height,
-                            'age': age,
-                            'weight': weight,
-                          }),
-                          title: 'Edit',
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+              ),
         ),
       ),
     );
