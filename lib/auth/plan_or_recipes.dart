@@ -5,16 +5,16 @@ import '../pages/signin.dart';
 import '../pages/signup.dart';
 
 class PlanOrRecipe extends StatefulWidget {
-  const PlanOrRecipe({super.key});
+  const PlanOrRecipe({super.key, required this.show});
+  final bool show;
 
   @override
   State<PlanOrRecipe> createState() => _PlanOrRecipeState();
 }
 
 class _PlanOrRecipeState extends State<PlanOrRecipe> {
-  //initially, show login page
   bool showPlanPage = true;
-  //toggle between login and register page
+
   void togglePages() {
     setState(() {
       showPlanPage = !showPlanPage;
@@ -23,7 +23,7 @@ class _PlanOrRecipeState extends State<PlanOrRecipe> {
 
   @override
   Widget build(BuildContext context) {
-    if (showPlanPage) {
+    if (widget.show) {
       return PlanPage(
         goToRecipe: togglePages,
       );

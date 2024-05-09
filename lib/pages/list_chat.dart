@@ -84,6 +84,7 @@ class _ListChatState extends State<ListChat> {
               builder: (context) => ChatPage(
                 receiverUserEmail: email,
                 receiverUserId: uid,
+                receiverFullname: document['fullname'],
               ),
             ),
           );

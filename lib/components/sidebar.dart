@@ -153,12 +153,20 @@ class Sidebar extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const Dashboard()));
         break;
       case 1:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const PlanOrRecipe()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PlanOrRecipe(
+                      show: true,
+                    )));
         break;
       case 2:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const PlanOrRecipe()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PlanOrRecipe(
+                      show: false,
+                    )));
         break;
       case 3:
         Navigator.push(

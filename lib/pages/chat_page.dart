@@ -11,10 +11,12 @@ import 'package:flutter/widgets.dart';
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserId;
+  final String receiverFullname;
   const ChatPage(
       {super.key,
       required this.receiverUserEmail,
-      required this.receiverUserId});
+      required this.receiverUserId,
+      required this.receiverFullname});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -36,7 +38,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Text(widget.receiverFullname),
       ),
       body: Column(
         children: [
