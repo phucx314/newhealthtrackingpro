@@ -5,7 +5,10 @@ import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
 
 class Feature extends StatelessWidget {
-  const Feature({super.key});
+  Feature({super.key, required this.title, required this.icon,});
+
+  final String title;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class Feature extends StatelessWidget {
       ),
 
       // icon
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
@@ -29,7 +32,7 @@ class Feature extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  '❤️', // này lấy từ model
+                  icon, // này lấy từ model?
                   style: TextStyle(
                     fontSize: 32,
                   ),
@@ -41,7 +44,7 @@ class Feature extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  'Tên feature', // này lấy từ model
+                  title, // này lấy từ model
                 ),
               ),
             ),

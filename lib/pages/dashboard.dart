@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:app3/components/height_weight_changer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -43,85 +46,57 @@ class Dashboard extends StatelessWidget {
                           child: Row(
                             children: [
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipN8iFY73SaEL4LykuIilIW5kPkCJTlpbDcY5bfm?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🐅',
+                                  title: 'Just',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMa26UNcfFQoiuZrl8xUgNODCnK98csa8A4kdo3?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦊',
+                                  title: 'Some',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipP9hAJjZL9wipy3NuCNv0CApZg2Y3rWJIq0TIzs?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦆',
+                                  title: 'Random',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMMrDNs7ch3EvZzGVHKD1uNmYa9G7FG65XlfwM9?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🪳',
+                                  title: 'Facts',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipOP7zs4RFvacHhURlLDRGn13LGPGdyAtZn9VJYi?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦐',
+                                  title: 'You',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMYH6fLdc4O14Ga8G-_4QFooPSwIMGLokDbIs_H?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🐬',
+                                  title: 'Might',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipM6mcq4w-jQU33N8LRl9NLuLMaj8Yb7iHPCpNXB?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦏',
+                                  title: 'Like',
                               ),
                             ],
                           ),
@@ -204,11 +179,30 @@ class Dashboard extends StatelessWidget {
                         height: 25,
                       ),
 
+                      // text how have u changed
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Text(
+                          'How have you changed?',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      // cái box hiển thị cân nặng chiều cao
+                      HeightWeightChanger(),
+                      SizedBox(height: 25,),
+
                       // how much water j j đấy
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: Text(
-                          'How much have you drunk today?',
+                          'How much water consumed today?',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -220,7 +214,7 @@ class Dashboard extends StatelessWidget {
                       ),
 
                       // cái box để hiển thị mấy cái ly nước
-                      const WaterIntake(), // sửa lại theo logic sau
+                      const WaterIntake(),
                       const SizedBox(
                         height: 25,
                       ),
@@ -241,30 +235,26 @@ class Dashboard extends StatelessWidget {
                       ),
 
                       // row gồm mấy cái features khác
-                      const SingleChildScrollView(
+                      SingleChildScrollView(
                         clipBehavior: Clip.none, // cái này fix lỗi mấy cái shadows bị clipped mất
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 25),
                           child: Row(
                             children: [
-                              Feature(),
+                              Feature(title: 'BMI Calculator', icon: '🧮',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
+                              Feature(title: 'Diary', icon: '📓',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
+                              Feature(title: 'Set goal', icon: '🎯',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Feature(),
+                              Feature(title: 'Ask nutritionists', icon: '🧑‍⚕️',),
                             ],
                           ),
                         ),

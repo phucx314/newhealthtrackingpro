@@ -45,59 +45,57 @@ class _WaterIntakeState extends State<WaterIntake> {
   }
 
   void toggleWaterConsumed(int index) {
-  setState(() {
-    // Kiểm tra xem số lượng ly nước đã uống đã đạt giới hạn 25 hay chưa
-    if (waterConsumed.length <= 25) {
-      bool canChangeState = true;
+    setState(() {
+      // Kiểm tra xem số lượng ly nước đã uống đã đạt giới hạn 25 hay chưa
+      if (waterConsumed.length <= 25) {
+        bool canChangeState = true;
 
-      // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
-      bool nextIsFilled = index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
+        // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
+        bool nextIsFilled = index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
 
-      // Nếu ly tiếp theo là ly đã được uống, ly được chọn không thể thay đổi trạng thái
-      if (nextIsFilled) {
-        canChangeState = false;
-      }
-
-      // Nếu ly được chọn không thể thay đổi trạng thái, không cần kiểm tra và thực hiện gán trạng thái mới
-      if (canChangeState) {
-        // Đảm bảo chỉ có một ly được chọn là ly filled mới nhất
-        bool hasFilled = false;
-
-        for (int i = 0; i < waterConsumed.length; i++) {
-          if (i == index) {
-            break;
-          }
-
-          if (waterConsumed[i] != 0) {
-            hasFilled = true;
-          } else if (hasFilled) {
-            canChangeState = false;
-            break;
-          }
+        // Nếu ly tiếp theo là ly đã được uống, ly được chọn không thể thay đổi trạng thái
+        if (nextIsFilled) {
+          canChangeState = false;
         }
 
-        // Nếu có thể thay đổi trạng thái của ly được chọn
+        // Nếu ly được chọn không thể thay đổi trạng thái, không cần kiểm tra và thực hiện gán trạng thái mới
         if (canChangeState) {
-          if (waterConsumed[index] == 0) {
-            waterConsumed[index] = waterPerCup;
-            // Thêm một ly rỗng mới bên cạnh nếu chưa đạt giới hạn
-            if (waterConsumed.length < 25) {
-              waterConsumed.insert(index + 1, 0);
+          // Đảm bảo chỉ có một ly được chọn là ly filled mới nhất
+          bool hasFilled = false;
+
+          for (int i = 0; i < waterConsumed.length; i++) {
+            if (i == index) {
+              break;
             }
-          } else {
-            waterConsumed[index] = 0;
-            // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
-            if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
-              waterConsumed.removeAt(index + 1);
+
+            if (waterConsumed[i] != 0) {
+              hasFilled = true;
+            } else if (hasFilled) {
+              canChangeState = false;
+              break;
+            }
+          }
+
+          // Nếu có thể thay đổi trạng thái của ly được chọn
+          if (canChangeState) {
+            if (waterConsumed[index] == 0) {
+              waterConsumed[index] = waterPerCup;
+              // Thêm một ly rỗng mới bên cạnh nếu chưa đạt giới hạn
+              if (waterConsumed.length < 25) {
+                waterConsumed.insert(index + 1, 0);
+              }
+            } else {
+              waterConsumed[index] = 0;
+              // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
+              if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
+                waterConsumed.removeAt(index + 1);
+              }
             }
           }
         }
       }
-    }
-  });
-}
-
-
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
