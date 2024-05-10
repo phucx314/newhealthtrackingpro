@@ -6,7 +6,7 @@ import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
 
 class WaterIntake extends StatefulWidget {
-  const WaterIntake({Key? key}) : super(key: key);
+  const WaterIntake({super.key});
 
   @override
   _WaterIntakeState createState() => _WaterIntakeState();
@@ -20,50 +20,52 @@ class _WaterIntakeState extends State<WaterIntake> {
   double calculateWaterIntake() {
     // Mỗi ly nước đã đầy tương ứng với lượng nước mỗi ly
     int filledCupsCount = waterConsumed.where((filled) => filled).length;
-    return filledCupsCount * waterPerCup.toDouble(); // Tính tổng số ml nước đã uống
+    return filledCupsCount *
+        waterPerCup.toDouble(); // Tính tổng số ml nước đã uống
   }
 
   // Hàm để cập nhật số lượng ly nước
-void updateWaterCupsCount() {
-  setState(() {
-    int newCupCount = (2000 ~/ waterPerCup) + 1;
-    if (newCupCount > waterConsumed.length) {
-      // Tăng số lượng phần tử trong danh sách waterConsumed nếu cần
-      waterConsumed.addAll(List.generate(newCupCount - waterConsumed.length, (index) => false));
-    } else if (newCupCount < waterConsumed.length) {
-      // Giảm số lượng phần tử trong danh sách waterConsumed nếu cần
-      waterConsumed.removeRange(newCupCount, waterConsumed.length);
-    }
-  });
-}
+  void updateWaterCupsCount() {
+    setState(() {
+      int newCupCount = (2000 ~/ waterPerCup) + 1;
+      if (newCupCount > waterConsumed.length) {
+        // Tăng số lượng phần tử trong danh sách waterConsumed nếu cần
+        waterConsumed.addAll(List.generate(
+            newCupCount - waterConsumed.length, (index) => false));
+      } else if (newCupCount < waterConsumed.length) {
+        // Giảm số lượng phần tử trong danh sách waterConsumed nếu cần
+        waterConsumed.removeRange(newCupCount, waterConsumed.length);
+      }
+    });
+  }
 
 // Hàm để tăng lượng nước mỗi ly
-void increaseWaterPerCup() {
-  setState(() {
-    // Tăng lượng nước mỗi ly lên 50ml
-    waterPerCup += 50;
-    // Giới hạn giá trị lượng nước mỗi ly từ 100ml đến 500ml
-    if (waterPerCup > 500) {
-      waterPerCup = 500;
-    }
-    // Cập nhật số lượng ly nước
-    updateWaterCupsCount();
-  });
-}
+  void increaseWaterPerCup() {
+    setState(() {
+      // Tăng lượng nước mỗi ly lên 50ml
+      waterPerCup += 50;
+      // Giới hạn giá trị lượng nước mỗi ly từ 100ml đến 500ml
+      if (waterPerCup > 500) {
+        waterPerCup = 500;
+      }
+      // Cập nhật số lượng ly nước
+      updateWaterCupsCount();
+    });
+  }
 
 // Hàm để giảm lượng nước mỗi ly
-void decreaseWaterPerCup() {
-  setState(() {
-    // Giảm lượng nước mỗi ly đi 50ml
-    waterPerCup -= 50;
-    // Giới hạn giá trị lượng nước mỗi ly từ 100ml đến 500ml
-    if (waterPerCup < 100) {
-      waterPerCup = 100;
-    }
-    // Cập nhật số lượng ly nước
-    updateWaterCupsCount();
-  });
-}
+  void decreaseWaterPerCup() {
+    setState(() {
+      // Giảm lượng nước mỗi ly đi 50ml
+      waterPerCup -= 50;
+      // Giới hạn giá trị lượng nước mỗi ly từ 100ml đến 500ml
+      if (waterPerCup < 100) {
+        waterPerCup = 100;
+      }
+      // Cập nhật số lượng ly nước
+      updateWaterCupsCount();
+    });
+  }
 
   // Hàm kiểm tra xem có thể chuyển đổi trạng thái của một ly nước được không
   bool canToggleWaterConsumed(int index) {
@@ -114,13 +116,19 @@ void decreaseWaterPerCup() {
                   onTap: () {
                     decreaseWaterPerCup();
                   },
-                  child: Image(image: AssetImage('assets/icons/btn_minus.png'), height: 60, width: 60,),
+                  child: Image(
+                    image: AssetImage('assets/icons/btn_minus.png'),
+                    height: 60,
+                    width: 60,
+                  ),
                 ),
 
                 // lượng nước mỗi ly
                 Text(
                   '${getWaterPerCup()} ml per cup',
-                  style: TextStyle(color: htaPrimaryColors.shade500,),
+                  style: TextStyle(
+                    color: htaPrimaryColors.shade500,
+                  ),
                 ),
 
                 // dấu cộng
@@ -128,11 +136,17 @@ void decreaseWaterPerCup() {
                   onTap: () {
                     increaseWaterPerCup();
                   },
-                  child: Image(image: AssetImage('assets/icons/btn_plus.png'), height: 60, width: 60,),
+                  child: Image(
+                    image: AssetImage('assets/icons/btn_plus.png'),
+                    height: 60,
+                    width: 60,
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             // mấy cái ly
             GridView.builder(
               shrinkWrap: true,
@@ -142,7 +156,10 @@ void decreaseWaterPerCup() {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: (2000%waterPerCup == 0) ? (2000~/waterPerCup) : (2000~/waterPerCup + 1), // Số lượng mục muốn hiển thị lây số nguyên, nếu ít hơn 2000ml thì thêm 1 ly, nếu nhiều hơn 2000ml thì khỏi
+              itemCount: (2000 % waterPerCup == 0)
+                  ? (2000 ~/ waterPerCup)
+                  : (2000 ~/ waterPerCup +
+                      1), // Số lượng mục muốn hiển thị lây số nguyên, nếu ít hơn 2000ml thì thêm 1 ly, nếu nhiều hơn 2000ml thì khỏi
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
@@ -170,7 +187,7 @@ void decreaseWaterPerCup() {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                '${calculateWaterIntake()}/${(2000%waterPerCup == 0) ? waterPerCup*(2000~/waterPerCup) : waterPerCup*(2000~/waterPerCup + 1)} ml',
+                '${calculateWaterIntake()}/${(2000 % waterPerCup == 0) ? waterPerCup * (2000 ~/ waterPerCup) : waterPerCup * (2000 ~/ waterPerCup + 1)} ml',
                 style: TextStyle(
                   color: htaPrimaryColors.shade500,
                 ),
