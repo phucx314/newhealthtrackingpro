@@ -33,7 +33,7 @@ class _ListChatState extends State<ListChat> {
               child: MyAppBar(username: "Rosser"),
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             Expanded(
               // Use Expanded to allow the ListView to take remaining space.
@@ -75,20 +75,48 @@ class _ListChatState extends State<ListChat> {
 
     // Ensure the current user is not the same as the user being displayed.
     if (_auth.currentUser!.email != email) {
-      return ListTile(
-        title: Text(email),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                receiverUserEmail: email,
-                receiverUserId: uid,
-                receiverFullname: document['fullname'],
+      return Padding(
+        padding:
+            const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+        child: Container(
+          decoration: BoxDecoration(
+            color: htaPrimaryColors.shade50,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: ListTile(
+            title: Container(
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: htaPrimaryColors.shade500,
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  Text(
+                    email,
+                    style: const TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                    receiverUserEmail: email,
+                    receiverUserId: uid,
+                    receiverFullname: document['fullname'],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       );
     } else {
       // Return an empty container if the user is the current user.

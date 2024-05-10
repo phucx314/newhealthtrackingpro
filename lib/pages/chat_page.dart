@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../colors/color_set.dart';
+
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserId;
@@ -31,22 +33,32 @@ class _ChatPageState extends State<ChatPage> {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
           widget.receiverUserId, _messageController.text);
+      _messageController.text = '';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: htaPrimaryColors.shade100,
       appBar: AppBar(
-        title: Text(widget.receiverFullname),
+        backgroundColor: htaPrimaryColors.shade500,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: Text(
+            widget.receiverFullname,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
           Expanded(child: _builMessageList()),
           _buildMessageInput(),
-          const SizedBox(
-            height: 25,
-          ),
         ],
       ),
     );
@@ -83,7 +95,7 @@ class _ChatPageState extends State<ChatPage> {
     return Container(
       alignment: alignment,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           crossAxisAlignment:
               (data['senderId'] == _firebaseAuth.currentUser!.uid)
@@ -107,21 +119,33 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageInput() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 25.0, right: 25, bottom: 10),
       child: Row(
         children: [
           Expanded(
-              child: MyTextField(
-            controller: _messageController,
-            hintText: 'Enter message',
-            obscureText: false,
-          )),
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: htaPrimaryColors.shade100,
+                ),
+                child: MyTextField(
+                  controller: _messageController,
+                  hintText: 'Enter message',
+                  obscureText: false,
+                ),
+              ),
+            ),
+          ),
           IconButton(
-              onPressed: sendMessage,
-              icon: const Icon(
-                Icons.arrow_upward,
-                size: 40,
-              ))
+            onPressed: sendMessage,
+            icon: Icon(
+              Icons.arrow_upward,
+              size: 40,
+              color: htaPrimaryColors.shade500,
+            ),
+          )
         ],
       ),
     );
