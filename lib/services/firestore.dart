@@ -74,6 +74,37 @@ class FirestoreService {
     }
   }
 
+  Future<void> updateRecipe(
+      String id,
+      String newDescription,
+      String newImagePath,
+      String newDetail,
+      bool newFavorites,
+      String newAuthor) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await recipes.where('id', isEqualTo: id).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.update({
+            'description': newDescription,
+            'imagePath': newImagePath,
+            'detail': newDetail,
+            'favorites': newFavorites,
+            'author': newAuthor
+          });
+        });
+        print('Recipe with ID $id updated successfully.');
+      } else {
+        print('Recipe with ID $id not found');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình cập nhật Firestore
+      print('Error updating recipe: $e');
+    }
+  }
+
   ///P L A N
   final CollectionReference plans =
       FirebaseFirestore.instance.collection('plans');
@@ -136,6 +167,34 @@ class FirestoreService {
       }
     } catch (error) {
       throw Exception('Error fetching recipe with ID $id: $error');
+    }
+  }
+
+  Future<void> updatePlan(
+    String id,
+    String newDescription,
+    String newImagePath,
+    String newtimeFund,
+  ) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await plans.where('id', isEqualTo: id).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.update({
+            'description': newDescription,
+            'imagePath': newImagePath,
+            'timeFund': newtimeFund,
+          });
+        });
+        print('Plan with ID $id updated successfully.');
+      } else {
+        print('Plan with ID $id not found');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình cập nhật Firestore
+      print('Error updating Plan: $e');
     }
   }
 }
