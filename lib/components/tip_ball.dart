@@ -5,9 +5,13 @@ import '../colors/color_set.dart';
 import '../models/tip_ball.dart';
 
 class TipBall extends StatelessWidget {
-  final Tip tip;
+  // final Tip tip;
 
-  const TipBall({super.key, required this.tip});
+  final imageUrl;
+  final emoji;
+  final title;
+
+  const TipBall({super.key, required this.imageUrl, required this.emoji, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +28,10 @@ class TipBall extends StatelessWidget {
           ),
           child: CircleAvatar(
             radius: 30.0,
-            backgroundImage: NetworkImage(tip.imageUrl),
+            backgroundImage: NetworkImage(imageUrl),
             child: Center(
               child: Text(
-                tip.emoji,
+                emoji,
                 style: TextStyle(fontSize: 24, shadows: <Shadow>[
                   Shadow(
                     // offset: Offset(5, 5),
@@ -41,7 +45,7 @@ class TipBall extends StatelessWidget {
         ),
 
         // tên tip
-        Text(tip.description),
+        Text(title),
       ],
     );
   }
