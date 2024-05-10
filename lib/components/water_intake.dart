@@ -45,7 +45,9 @@ class _WaterIntakeState extends State<WaterIntake> {
   }
 
   void toggleWaterConsumed(int index) {
-    setState(() {
+  setState(() {
+    // Kiểm tra xem số lượng ly nước đã uống đã đạt giới hạn 25 hay chưa
+    if (waterConsumed.length <= 25) {
       bool canChangeState = true;
 
       // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
@@ -78,8 +80,10 @@ class _WaterIntakeState extends State<WaterIntake> {
         if (canChangeState) {
           if (waterConsumed[index] == 0) {
             waterConsumed[index] = waterPerCup;
-            // Thêm một ly rỗng mới bên cạnh
-            waterConsumed.insert(index + 1, 0);
+            // Thêm một ly rỗng mới bên cạnh nếu chưa đạt giới hạn
+            if (waterConsumed.length < 25) {
+              waterConsumed.insert(index + 1, 0);
+            }
           } else {
             waterConsumed[index] = 0;
             // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
@@ -89,8 +93,10 @@ class _WaterIntakeState extends State<WaterIntake> {
           }
         }
       }
-    });
-  }
+    }
+  });
+}
+
 
 
   @override
