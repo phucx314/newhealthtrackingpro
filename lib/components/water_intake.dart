@@ -11,13 +11,13 @@ class WaterIntake extends StatefulWidget {
 }
 
 class _WaterIntakeState extends State<WaterIntake> {
-  int waterPerCup = 400; // Lượng nước mỗi ly, khởi tạo ban đầu là 400ml
+  int waterPerCup = 200; // Lượng nước mỗi ly, khởi tạo ban đầu là 200ml
   List<int> waterConsumed = [0]; // Chỉ có một ly nước ban đầu
 
   // Hàm tính lượng nước đã uống
-  double calculateWaterIntake() {
+  int calculateWaterIntake() {
     // Tính tổng số ml nước đã uống
-    return waterConsumed.reduce((value, element) => value + element).toDouble();
+    return waterConsumed.reduce((value, element) => value + element).toInt();
   }
 
   // Hàm để tăng lượng nước mỗi ly
@@ -44,22 +44,49 @@ class _WaterIntakeState extends State<WaterIntake> {
     });
   }
 
-  // Hàm kiểm tra xem có thể chuyển đổi trạng thái của một ly nước được không
-  bool canToggleWaterConsumed(int index) {
-    return waterConsumed[index] == 0; // Chỉ có thể điền nước nếu ly trống
-  }
-
   void toggleWaterConsumed(int index) {
     setState(() {
-      // Kiểm tra xem ly nước có được điền nước không và không phải ly đầu tiên
-      if (waterConsumed[index] != 0 && index != 0) {
-        waterConsumed[index] = 0; // Rút nước ra khỏi ly
-      } else if (canToggleWaterConsumed(index) && waterConsumed.length <= 20) {
-        // Thêm một ly nước mới và điền nước cho ly hiện tại
-        waterConsumed[index] = waterPerCup;
-        // Kiểm tra nếu đã điền đủ 20 ly thì không thêm nữa
-        if (waterConsumed.length < 20) {
-          waterConsumed.add(0); // Thêm một ly nước mới trống
+      bool canChangeState = true;
+
+      // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
+      bool nextIsFilled = index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
+
+      // Nếu ly tiếp theo là ly đã được uống, ly được chọn không thể thay đổi trạng thái
+      if (nextIsFilled) {
+        canChangeState = false;
+      }
+
+      // Nếu ly được chọn không thể thay đổi trạng thái, không cần kiểm tra và thực hiện gán trạng thái mới
+      if (canChangeState) {
+        // Đảm bảo chỉ có một ly được chọn là ly filled mới nhất
+        bool hasFilled = false;
+
+        for (int i = 0; i < waterConsumed.length; i++) {
+          if (i == index) {
+            break;
+          }
+
+          if (waterConsumed[i] != 0) {
+            hasFilled = true;
+          } else if (hasFilled) {
+            canChangeState = false;
+            break;
+          }
+        }
+
+        // Nếu có thể thay đổi trạng thái của ly được chọn
+        if (canChangeState) {
+          if (waterConsumed[index] == 0) {
+            waterConsumed[index] = waterPerCup;
+            // Thêm một ly rỗng mới bên cạnh
+            waterConsumed.insert(index + 1, 0);
+          } else {
+            waterConsumed[index] = 0;
+            // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
+            if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
+              waterConsumed.removeAt(index + 1);
+            }
+          }
         }
       }
     });
@@ -146,7 +173,7 @@ class _WaterIntakeState extends State<WaterIntake> {
               child: Text(
                 '${calculateWaterIntake()}/2000 ml',
                 style: TextStyle(
-                  color: htaPrimaryColors.shade500,
+                  color: (calculateWaterIntake() >= 2000) ? htaStatusColors.shade200 : htaStatusColors.shade900,
                 ),
               ),
             ),

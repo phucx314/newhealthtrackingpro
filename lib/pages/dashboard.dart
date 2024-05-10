@@ -242,8 +242,7 @@ class Dashboard extends StatelessWidget {
 
                       // row gồm mấy cái features khác
                       const SingleChildScrollView(
-                        clipBehavior: Clip
-                            .none, // cái này fix lỗi mấy cái shadows bị clipped mất
+                        clipBehavior: Clip.none, // cái này fix lỗi mấy cái shadows bị clipped mất
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 25),

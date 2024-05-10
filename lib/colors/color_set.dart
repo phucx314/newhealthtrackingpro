@@ -21,5 +21,6 @@ const MaterialColor htaStatusColors =
   200: Color(_mcgpalette1AccentValue),
   400: Color(0xFFE06666),
   700: Color(0xFFFFD966),
+  900: Color.fromARGB(255, 199, 199, 199),
 });
 const int _mcgpalette1AccentValue = 0xFF68CCA1;
