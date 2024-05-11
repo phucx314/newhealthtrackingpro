@@ -1,3 +1,4 @@
+import 'package:app3/components/mybutton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,38 @@ class _WaterIntakeState extends State<WaterIntake> {
   List<int> waterConsumed = [0]; // Chỉ có một ly nước ban đầu
 
   final FirestoreService firestoreService = FirestoreService();
+
+  @override
+  void initState() {
+    super.initState();
+    // Gọi phương thức để đọc dữ liệu từ Firestore khi ứng dụng được khởi động
+    _fetchWaterConsumedData();
+  }
+
+  // Phương thức để đọc dữ liệu từ Firestore và cập nhật trạng thái của ứng dụng
+  Future<void> _fetchWaterConsumedData() async {
+    String? uid = await firestoreService.getCurrentUserUID();
+    if (uid != null) {
+      bool hasData = await firestoreService.hasWaterConsumedData(uid);
+      List<int> waterData;
+
+      if (hasData) {
+        waterData = await firestoreService.getWaterConsumedData(uid);
+        waterData.add(0);
+      } else {
+        // Khởi tạo danh sách với các giá trị mặc định (0)
+        waterData = [0];
+      }
+
+      setState(() {
+        waterConsumed = waterData;
+      });
+    } else {
+      // Xử lý khi không thể lấy được UID
+    }
+  }
+
+
 
   // Hàm tính lượng nước đã uống
   int calculateWaterIntake() {
@@ -202,6 +235,12 @@ class _WaterIntakeState extends State<WaterIntake> {
                   color: (calculateWaterIntake() >= 2000) ? htaStatusColors.shade200 : htaStatusColors.shade900,
                 ),
               ),
+            ),
+
+            // nut hien lich su uong nuoc
+            Button(
+              onTap: () {}, 
+              title: 'Show history',
             ),
           ],
         ),

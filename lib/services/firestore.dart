@@ -185,4 +185,24 @@ class FirestoreService {
       print('Cup with ID $cupID not found');
     }
   }
+
+  Future<bool> hasWaterConsumedData(String uid) async {
+    QuerySnapshot snapshot = await waterCups.where('uid', isEqualTo: uid).limit(1).get();
+    return snapshot.docs.isNotEmpty;
+  }
+
+
+  Future<List<int>> getWaterConsumedData(String uid) async {
+    try {
+      QuerySnapshot querySnapshot = await waterCups.where('uid', isEqualTo: uid).get();
+      List<int> waterConsumedData = [];
+      querySnapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        waterConsumedData.add(data['waterConsumed']);
+      });
+      return waterConsumedData;
+    } catch (error) {
+      throw Exception('Error fetching water consumed data: $error');
+    }
+  }
 }
