@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
 import '../components/button.dart';
@@ -27,7 +25,7 @@ class Signin extends StatelessWidget {
           //   title: Text(e.toString()),
           // ),
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
                 title: Text("Please enter your user name and password!"),
               ));
     }
@@ -51,7 +49,8 @@ class Signin extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: Container(
                           height: 60,
-                          margin: EdgeInsets.only(top: 25, left: 25, right: 25),
+                          margin: const EdgeInsets.only(
+                              top: 25, left: 25, right: 25),
                           decoration: BoxDecoration(
                             boxShadow: [
                               shadow,
@@ -68,7 +67,7 @@ class Signin extends StatelessWidget {
                                   child: TextButton(
                                     style: ButtonStyle(
                                       minimumSize: MaterialStateProperty.all(
-                                          Size.fromHeight(50)),
+                                          const Size.fromHeight(50)),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               htaPrimaryColors.shade500),
@@ -86,7 +85,7 @@ class Signin extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: null,
-                                    child: Text('Sign in'),
+                                    child: const Text('Sign in'),
                                   ),
                                 ),
                               ),
@@ -98,7 +97,7 @@ class Signin extends StatelessWidget {
                                   child: TextButton(
                                     style: ButtonStyle(
                                       minimumSize: MaterialStateProperty.all(
-                                          Size.fromHeight(50)),
+                                          const Size.fromHeight(50)),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               htaPrimaryColors.shade50),
@@ -136,8 +135,8 @@ class Signin extends StatelessWidget {
                     // ảnh gì đấy
                     Container(
                       height: 400,
-                      padding: EdgeInsets.all(50),
-                      child: Image(
+                      padding: const EdgeInsets.all(50),
+                      child: const Image(
                         image: AssetImage('assets/images/app_logo_pic.png'),
                       ),
                     ),
@@ -156,11 +155,11 @@ class Signin extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             // Text
-                            MyHeaderText(
+                            const MyHeaderText(
                               text: 'Sign in',
                             ),
 
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
 
@@ -171,7 +170,7 @@ class Signin extends StatelessWidget {
                               obscureText: false,
                             ),
 
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
 
@@ -182,7 +181,7 @@ class Signin extends StatelessWidget {
                               obscureText: true,
                             ),
 
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
 
@@ -194,7 +193,7 @@ class Signin extends StatelessWidget {
                                   TextStyle(color: htaPrimaryColors.shade500),
                             ),
 
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
 

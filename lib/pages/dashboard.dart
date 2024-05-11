@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app3/components/height_weight_changer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +27,7 @@ class Dashboard extends StatelessWidget {
           child: Column(
             children: [
               // Phần không cuộn
-              Padding(
+              const Padding(
                 padding:
                     EdgeInsets.only(top: 25, bottom: 25, right: 15, left: 15),
                 child: MyAppBar(username: 'Alice'),
@@ -41,99 +42,71 @@ class Dashboard extends StatelessWidget {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
                           child: Row(
                             children: [
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipN8iFY73SaEL4LykuIilIW5kPkCJTlpbDcY5bfm?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🐅',
+                                  title: 'Just',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMa26UNcfFQoiuZrl8xUgNODCnK98csa8A4kdo3?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦊',
+                                  title: 'Some',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipP9hAJjZL9wipy3NuCNv0CApZg2Y3rWJIq0TIzs?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦆',
+                                  title: 'Random',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMMrDNs7ch3EvZzGVHKD1uNmYa9G7FG65XlfwM9?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🪳',
+                                  title: 'Facts',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipOP7zs4RFvacHhURlLDRGn13LGPGdyAtZn9VJYi?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦐',
+                                  title: 'You',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMYH6fLdc4O14Ga8G-_4QFooPSwIMGLokDbIs_H?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🐬',
+                                  title: 'Might',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                tip: Tip(
-                                  imageUrl: 'https://picsum.photos/250?image=9',
-                                  emoji: '😏',
-                                  content: "",
-                                  description: 'Đoán xem',
-                                  uid: "",
-                                ),
+                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipM6mcq4w-jQU33N8LRl9NLuLMaj8Yb7iHPCpNXB?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                  emoji: '🦏',
+                                  title: 'Like',
                               ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25,
                       ),
                       // title Your stats today và channge date (?)
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: Text(
                           'Your stats for today',
@@ -143,54 +116,54 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       // mấy cái chart (khó làm quá để sau)
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Container(
                           decoration: BoxDecoration(
                             color: htaPrimaryColors.shade50,
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [shadow],
                           ),
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Column(
                             // crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               // Calories
-                              Text(
+                              const Text(
                                 'Calories',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               // pie charts
-                              SizedBox(
+                              const SizedBox(
                                 height: 110, // Đã sửa lại từ 1110
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     // chỗ này là số kcal đã hấp thụ
                                     // chỗ này là cái pie chart remaining kcal
                                     // chỗ này là số kcal đã đốt
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               // sleep
-                              Text(
+                              const Text(
                                 'Sleep',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               // chỗ này là cái sleep stats bar chart
@@ -202,33 +175,52 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25,
                       ),
 
-                      // how much water j j đấy
-                      Padding(
+                      // text how have u changed
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: Text(
-                          'How much have you drunk today?',
+                          'How have you changed?',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      // cái box hiển thị cân nặng chiều cao
+                      HeightWeightChanger(),
+                      SizedBox(height: 25,),
+
+                      // how much water j j đấy
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Text(
+                          'How much water consumed today?',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
                         height: 15,
                       ),
 
                       // cái box để hiển thị mấy cái ly nước
-                      WaterIntake(), // sửa lại theo logic sau
-                      SizedBox(
+                      const WaterIntake(),
+                      const SizedBox(
                         height: 25,
                       ),
 
                       // features
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: Text(
                           'More features',
@@ -238,43 +230,38 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
 
                       // row gồm mấy cái features khác
                       SingleChildScrollView(
-                        clipBehavior: Clip
-                            .none, // cái này fix lỗi mấy cái shadows bị clipped mất
+                        clipBehavior: Clip.none, // cái này fix lỗi mấy cái shadows bị clipped mất
                         scrollDirection: Axis.horizontal,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          padding: EdgeInsets.symmetric(horizontal: 25),
                           child: Row(
-                            children: const [
-                              Feature(),
+                            children: [
+                              Feature(title: 'BMI Calculator', icon: '🧮',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
+                              Feature(title: 'Diary', icon: '📓',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
+                              Feature(title: 'Set goal', icon: '🎯',),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Feature(),
+                              Feature(title: 'Ask nutritionists', icon: '🧑‍⚕️',),
                             ],
                           ),
                         ),
                       ),
 
                       // padding dưới
-                      SizedBox(
+                      const SizedBox(
                         height: 25,
                       ),
                     ],

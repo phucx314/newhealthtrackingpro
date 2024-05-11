@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
-import 'sidebar.dart'; // Import your SideBar widget
+import '../components/sidebar.dart'; // Import your SideBar widget
 
 class MyAppBar extends StatelessWidget {
   final VoidCallback? onMenuPressed;
@@ -38,7 +40,6 @@ class MyAppBar extends StatelessWidget {
 
         // Profile pic with username
         Expanded(
-          flex: 2,
           child: Container(
             height: 60,
             alignment: Alignment.center,
@@ -49,6 +50,7 @@ class MyAppBar extends StatelessWidget {
               boxShadow: [shadow],
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 // Avatar
                 const CircleAvatar(
@@ -57,15 +59,18 @@ class MyAppBar extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 // Username
-                Flexible(
-                  child: Text(
-                    'Hi, $username',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                      color: htaPrimaryColors.shade500,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Hi, $username',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: htaPrimaryColors.shade500,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

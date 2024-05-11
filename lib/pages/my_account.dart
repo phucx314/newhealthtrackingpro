@@ -171,6 +171,7 @@ class _MyAccountState extends State<MyAccount> {
           ElevatedButton(
             onPressed: () {
               updateUserInfo(userData);
+              getUserInfo();
               Navigator.pop(context); // Close the dialog
             },
             child: const Text('Update'),

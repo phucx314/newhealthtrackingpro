@@ -1,14 +1,15 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:app3/auth/plan_or_recipes.dart';
 import 'package:app3/models/plan.dart';
+import 'package:app3/pages/list_chat.dart';
 import 'package:app3/pages/planpage.dart';
 import 'package:app3/pages/recipes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../components/sidebar_item.dart';
 import '../pages/bmi_calculator.dart';
+import '../pages/chat_page.dart';
 import '../pages/dashboard.dart';
 import '../pages/my_account.dart';
 
@@ -25,8 +26,11 @@ class Sidebar extends StatelessWidget {
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
+            const SizedBox(
+              height: 25,
+            ),
             // logo app
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Image(
                 image: AssetImage(
@@ -34,7 +38,7 @@ class Sidebar extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
@@ -51,54 +55,56 @@ class Sidebar extends StatelessWidget {
                         color: htaPrimaryColors.shade500),
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
             // trên
             Expanded(
+              flex: 2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SidebarItem(
                     name: 'Dashboard',
                     icon: Icons.dashboard,
                     onTap: () => onItemTap(context, index: 0),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Plans',
                     icon: Icons.list,
                     onTap: () => onItemTap(context, index: 1),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Recipes',
                     icon: Icons.bookmark,
                     onTap: () => onItemTap(context, index: 2),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Dr.Zone (underdev)',
                     icon: Icons.local_hospital,
                     onTap: () => onItemTap(context, index: 3),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'BMI',
                     icon: Icons.calculate,
                     onTap: () => onItemTap(context, index: 4),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SidebarItem(
                     name: 'Profile',
                     icon: Icons.person_rounded,
@@ -109,32 +115,36 @@ class Sidebar extends StatelessWidget {
             ),
 
             // dưới
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                children: [
-                  SidebarItem(
-                    name: 'Log out',
-                    icon: Icons.logout,
-                    onTap: () => {auth.signOut()},
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SidebarItem(
-                    name: 'Settings',
-                    icon: Icons.settings,
-                    onTap: () => onItemTap(context, index: 8),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SidebarItem(
-                    name: 'Development team',
-                    icon: Icons.info,
-                    onTap: () => onItemTap(context, index: 9),
-                  ),
-                ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SidebarItem(
+                      name: 'Log out',
+                      icon: Icons.logout,
+                      onTap: () => {auth.signOut()},
+                    ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    SidebarItem(
+                      name: 'Settings',
+                      icon: Icons.settings,
+                      onTap: () => onItemTap(context, index: 8),
+                    ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    SidebarItem(
+                      name: 'Development team',
+                      icon: Icons.info,
+                      onTap: () => onItemTap(context, index: 9),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -148,24 +158,37 @@ class Sidebar extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Dashboard()));
         break;
       case 1:
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PlanOrRecipe(
+                      show: true,
+                    )));
         break;
       case 2:
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlanOrRecipe()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PlanOrRecipe(
+                      show: false,
+                    )));
         break;
-      // case 3: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
+      case 3:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const ListChat()));
+        break;
+
       case 4:
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BMI()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const BMI()));
         break;
       case 5:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyAccount()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MyAccount()));
         break;
 
       // case 7: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
