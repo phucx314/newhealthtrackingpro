@@ -51,7 +51,8 @@ class _WaterIntakeState extends State<WaterIntake> {
         bool canChangeState = true;
 
         // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
-        bool nextIsFilled = index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
+        bool nextIsFilled =
+            index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
 
         // Nếu ly tiếp theo là ly đã được uống, ly được chọn không thể thay đổi trạng thái
         if (nextIsFilled) {
@@ -87,7 +88,8 @@ class _WaterIntakeState extends State<WaterIntake> {
             } else {
               waterConsumed[index] = 0;
               // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
-              if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
+              if (index + 1 < waterConsumed.length &&
+                  waterConsumed[index + 1] == 0) {
                 waterConsumed.removeAt(index + 1);
               }
             }
@@ -192,7 +194,9 @@ class _WaterIntakeState extends State<WaterIntake> {
               child: Text(
                 '${calculateWaterIntake()}/2000 ml',
                 style: TextStyle(
-                  color: (calculateWaterIntake() >= 2000) ? htaStatusColors.shade200 : htaStatusColors.shade900,
+                  color: (calculateWaterIntake() >= 2000)
+                      ? htaStatusColors.shade200
+                      : htaStatusColors.shade900,
                 ),
               ),
             ),
