@@ -1,9 +1,13 @@
 import 'package:app3/models/plan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../models/recipe.dart';
 
 class FirestoreService {
+
+  // RECIPES
   final CollectionReference recipes =
       FirebaseFirestore.instance.collection('recipes');
 
@@ -74,7 +78,7 @@ class FirestoreService {
     }
   }
 
-  ///P L A N
+  // PLAN
   final CollectionReference plans =
       FirebaseFirestore.instance.collection('plans');
 
@@ -136,6 +140,49 @@ class FirestoreService {
       }
     } catch (error) {
       throw Exception('Error fetching recipe with ID $id: $error');
+    }
+  }
+
+  // WATER CUPS
+  final CollectionReference waterCups = FirebaseFirestore.instance.collection('water_cups');
+  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc('uid');
+
+  Future<void> addCup(
+    String cupID,
+    int waterConsumed,
+    String dateCreated,
+    String uid,
+  ) async {
+    await waterCups.add({
+      'cupID': cupID,
+      'waterConsumed': waterConsumed,
+      'dateCreated': dateCreated,
+      'uid': uid,
+    });
+  }
+
+  // Hàm để lấy UID của người dùng đã đăng nhập
+  Future<String?> getCurrentUserUID() async {
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Nếu người dùng đã đăng nhập, trả về UID của họ
+      return user.uid;
+    } else {
+      // Nếu không có người dùng nào đăng nhập, trả về null
+      return null;
+    }
+  }
+
+  Future<void> deleteCup(String cupID) async {
+    QuerySnapshot querySnapshot = await waterCups.where('cupID', isEqualTo: cupID).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      querySnapshot.docs.forEach((doc) async {
+        await doc.reference.delete();
+      });
+    } else {
+      print('Cup with ID $cupID not found');
     }
   }
 }

@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
+import '../services/firestore.dart';
 import '../styles/box_shadow.dart';
 
 class WaterIntake extends StatefulWidget {
@@ -13,6 +15,8 @@ class WaterIntake extends StatefulWidget {
 class _WaterIntakeState extends State<WaterIntake> {
   int waterPerCup = 200; // Lượng nước mỗi ly, khởi tạo ban đầu là 200ml
   List<int> waterConsumed = [0]; // Chỉ có một ly nước ban đầu
+
+  final FirestoreService firestoreService = FirestoreService();
 
   // Hàm tính lượng nước đã uống
   int calculateWaterIntake() {
@@ -84,17 +88,35 @@ class _WaterIntakeState extends State<WaterIntake> {
               if (waterConsumed.length < 25) {
                 waterConsumed.insert(index + 1, 0);
               }
+              // Thêm dữ liệu mới vào Firestore
+              _addCupToFirestore(index.toString());
             } else {
               waterConsumed[index] = 0;
               // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
               if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
                 waterConsumed.removeAt(index + 1);
+                firestoreService.deleteCup(index.toString());
               }
             }
           }
         }
       }
     });
+  }
+
+  Future<void> _addCupToFirestore(String cupID) async {
+    String? uid = await firestoreService.getCurrentUserUID();
+    if (uid != null) {
+      await firestoreService.addCup(
+        cupID,
+        waterPerCup,
+        DateTime.now().toString(),
+        uid,
+      );
+      setState(() {}); // Gọi setState để cập nhật UI
+    } else {
+      // Xử lý khi không thể lấy được UID
+    }
   }
 
   @override
