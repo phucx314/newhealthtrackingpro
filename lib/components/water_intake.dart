@@ -1,7 +1,10 @@
+import 'package:app3/components/bottomsheet_water_consumed_history.dart';
 import 'package:app3/components/mybutton.dart';
+import 'package:app3/pages/water_history.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../colors/color_set.dart';
 import '../services/firestore.dart';
 import '../styles/box_shadow.dart';
@@ -35,6 +38,7 @@ class _WaterIntakeState extends State<WaterIntake> {
 
       if (hasData) {
         waterData = await firestoreService.getWaterConsumedData(uid);
+        // get được mấy ly nước đầy rồi thì add thêm ly nước trống phía sau
         waterData.add(0);
       } else {
         // Khởi tạo danh sách với các giá trị mặc định (0)
@@ -236,11 +240,22 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
             ),
+            SizedBox(height: 15,),
 
             // nut hien lich su uong nuoc
-            Button(
-              onTap: () {}, 
-              title: 'Show history',
+            Align(
+              alignment: Alignment.centerRight,
+              child: Button(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WaterHistory()),
+                  );
+                }, 
+                title: 'Show history',
+                height: 40,
+                width: 120,
+              ),
             ),
           ],
         ),
