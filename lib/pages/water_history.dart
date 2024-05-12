@@ -3,7 +3,9 @@
 import 'package:app3/colors/color_set.dart';
 import 'package:app3/components/history_item.dart';
 import 'package:app3/models/history_item.dart';
+import 'package:app3/test_data/water_history.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class WaterHistory extends StatefulWidget {
   WaterHistory({super.key});
@@ -13,6 +15,7 @@ class WaterHistory extends StatefulWidget {
 }
 
 class _WaterHistoryState extends State<WaterHistory> {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,16 +39,8 @@ class _WaterHistoryState extends State<WaterHistory> {
                 ),
                 SizedBox(height: 25,),
                 // items
-                Column(
-                  children: [
-                    HistoryItem(
-                      date: 'Fri - May 10, 2024',
-                      consumptionAmount: 2150,
-                      evaluateColor: htaStatusColors.shade200,
-                      evaluateStatus: 'Good',
-                      historyItemID: '',
-                    ),
-                  ],
+                Expanded(
+                  child: HistoryList(),
                 ),
               ],
             ),

@@ -10,70 +10,89 @@ class HistoryItem extends StatelessWidget {
     super.key,
     this.historyItemID,
     required this.date,
-    required this.evaluateStatus,
-    required this.evaluateColor,
+    // required this.evaluateStatus,
+    // required this.evaluateColor,
     required this.consumptionAmount,
   });
 
   final historyItemID;
   final String date;
-  final String evaluateStatus;
-  final Color evaluateColor;
+  // final String evaluateStatus;
+  // final Color evaluateColor;
   final int consumptionAmount;
+
+  String evaluateStt(int consumptionAmount) {
+    if(consumptionAmount >= 2000) return 'Good';
+    else if(consumptionAmount < 2000 && consumptionAmount >= 1500) return 'Moderate';
+    else return 'Bad';
+  }
+
+  Color evaluateClr(int consumptionAmount) {
+    if(consumptionAmount >= 2000) return htaStatusColors.shade200;
+    else if(consumptionAmount < 2000 && consumptionAmount >= 1500) return htaStatusColors.shade400;
+    else return htaStatusColors.shade600;
+  }
   
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            // thứ ngày
-            Text(
-              date,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+        // Text thứ ngày và trạng thái đánh giá
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                date,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            // trạng thái đánh giá
-            Text(
-              evaluateStatus,
-            ),
-          ],
-        ),
-        SizedBox(width: 10,),
-
-        // màu trạng thái đánh giá
-        Container(
-          height: 60, 
-          width: 5, 
-          decoration: BoxDecoration(
-            color: evaluateColor,
-            borderRadius: BorderRadius.circular(5/2),
+              Text(
+                evaluateStt(consumptionAmount),
+              ),
+            ],
           ),
         ),
-
         SizedBox(width: 10,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // text
-            Text(
-              'You have consumed',
+        
+        // Container màu trạng thái đánh giá
+        Expanded(
+          flex: 0,
+          child: Container(
+            width: 5,
+            height: 60,
+            decoration: BoxDecoration(
+              color: evaluateClr(consumptionAmount),
+              borderRadius: BorderRadius.circular(5/2),
             ),
-            // số liệu consumed
-            Text(
-              consumptionAmount.toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+          ),
+        ),
+        
+        SizedBox(width: 10,),
+        
+        // Text 'You have consumed' và số liệu consumed
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'You have consumed',
               ),
-            ),
-          ],
+              Text(
+                consumptionAmount.toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
+
   }
-  
 }
