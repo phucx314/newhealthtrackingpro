@@ -53,8 +53,6 @@ class _WaterIntakeState extends State<WaterIntake> {
     }
   }
 
-
-
   // Hàm tính lượng nước đã uống
   int calculateWaterIntake() {
     // Tính tổng số ml nước đã uống
@@ -171,11 +169,9 @@ class _WaterIntakeState extends State<WaterIntake> {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            // chỉnh lượgn nước mỗi ly
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // dấu trừ
                 GestureDetector(
                   onTap: () {
                     decreaseWaterPerCup();
@@ -186,16 +182,12 @@ class _WaterIntakeState extends State<WaterIntake> {
                     width: 60,
                   ),
                 ),
-
-                // lượng nước mỗi ly
                 Text(
                   '$waterPerCup ml per cup',
                   style: TextStyle(
                     color: htaPrimaryColors.shade500,
                   ),
                 ),
-
-                // dấu cộng
                 GestureDetector(
                   onTap: () {
                     increaseWaterPerCup();
@@ -208,46 +200,41 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            // mấy cái ly
+            const SizedBox(height: 15),
             GridView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(), // Ngăn chặn cuộn
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: (2000 % waterPerCup == 0)
-                  ? (2000 ~/ waterPerCup)
-                  : (2000 ~/ waterPerCup +
-                      1), // Số lượng mục muốn hiển thị lây số nguyên, nếu ít hơn 2000ml thì thêm 1 ly, nếu nhiều hơn 2000ml thì khỏi
+              itemCount: waterConsumed.length,
               itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    toggleWaterConsumed(index);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Image(
-                        image: waterConsumed[index] != 0
-                            ? const AssetImage('assets/icons/cup_filled.png')
-                            : const AssetImage('assets/icons/cup_empty.png'),
+                if (index < waterConsumed.length) {
+                  return GestureDetector(
+                    onTap: () {
+                      toggleWaterConsumed(index);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Image(
+                          image: waterConsumed[index] != 0
+                              ? const AssetImage('assets/icons/cup_filled.png')
+                              : const AssetImage('assets/icons/cup_empty.png'),
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return SizedBox(); // Trả về widget trống nếu chỉ mục không hợp lệ
+                }
               },
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            // Hiển thị lượng nước đã uống
+            const SizedBox(height: 15),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -259,9 +246,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
             ),
-            SizedBox(height: 15,),
-
-            // nut hien lich su uong nuoc
+            SizedBox(height: 15),
             Align(
               alignment: Alignment.centerRight,
               child: Button(
@@ -270,7 +255,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                     context,
                     MaterialPageRoute(builder: (context) => WaterHistory()),
                   );
-                }, 
+                },
                 title: 'Show history',
                 height: 40,
                 width: 120,
