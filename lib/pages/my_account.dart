@@ -200,11 +200,14 @@ class _MyAccountState extends State<MyAccount> {
                   child: CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
-                child: Column(
+                  child: Column(
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(
-                          bottom: 25, top: 25, right: 25, left: 25,
+                          bottom: 25,
+                          top: 25,
+                          right: 25,
+                          left: 25,
                         ),
                         child: MyAppBar(
                           username: 'username',
@@ -239,8 +242,8 @@ class _MyAccountState extends State<MyAccount> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(25, 96 + 15, 25, 0),
+                                padding: const EdgeInsets.fromLTRB(
+                                    25, 96 + 15, 25, 0),
                                 child: Positioned(
                                   top: 96 + 15,
                                   child: Container(
@@ -265,7 +268,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'General information',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade500,
+                                                  color:
+                                                      htaPrimaryColors.shade500,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18,
                                                 ),
@@ -276,7 +280,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Full name',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -286,7 +291,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 fullname,
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -295,7 +301,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Email',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -305,7 +312,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 email ?? '',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -314,7 +322,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Phone number',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -324,7 +333,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 phoneNumber,
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -333,7 +343,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Your age',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -343,7 +354,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 age.toString(),
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -352,7 +364,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Physical health information',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade500,
+                                                  color:
+                                                      htaPrimaryColors.shade500,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18,
                                                 ),
@@ -363,7 +376,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Height',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -373,7 +387,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 height.toString(),
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -382,7 +397,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 'Weight',
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -392,7 +408,8 @@ class _MyAccountState extends State<MyAccount> {
                                               child: Text(
                                                 weight.toString(),
                                                 style: TextStyle(
-                                                  color: htaPrimaryColors.shade900,
+                                                  color:
+                                                      htaPrimaryColors.shade900,
                                                 ),
                                               ),
                                             ),
@@ -405,12 +422,14 @@ class _MyAccountState extends State<MyAccount> {
                               ),
                               Positioned(
                                 top: 30,
-                                left: MediaQuery.of(context).size.width / 2 - 48,
+                                left:
+                                    MediaQuery.of(context).size.width / 2 - 48,
                                 child: Container(
                                   height: 96,
                                   width: 96,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(0.5 * 96),
+                                    borderRadius:
+                                        BorderRadius.circular(0.5 * 96),
                                     color: htaPrimaryColors.shade50,
                                     boxShadow: [
                                       shadow,
@@ -450,7 +469,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
                     ],
                   ),
-              ),
+                ),
         ),
       ),
     );

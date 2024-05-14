@@ -10,7 +10,7 @@ import '../services/firestore.dart';
 import '../styles/box_shadow.dart';
 
 class WaterIntake extends StatefulWidget {
-  const WaterIntake({Key? key}) : super(key: key);
+  const WaterIntake({super.key});
 
   @override
   _WaterIntakeState createState() => _WaterIntakeState();
@@ -92,7 +92,8 @@ class _WaterIntakeState extends State<WaterIntake> {
         bool canChangeState = true;
 
         // Kiểm tra xem ly tiếp theo của ly được chọn là ly rỗng hay ly đã được uống
-        bool nextIsFilled = index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
+        bool nextIsFilled =
+            index + 1 < waterConsumed.length && waterConsumed[index + 1] != 0;
 
         // Nếu ly tiếp theo là ly đã được uống, ly được chọn không thể thay đổi trạng thái
         if (nextIsFilled) {
@@ -130,7 +131,8 @@ class _WaterIntakeState extends State<WaterIntake> {
             } else {
               waterConsumed[index] = 0;
               // Nếu có một ly rỗng mới bên cạnh ly được chọn thì xóa nó đi
-              if (index + 1 < waterConsumed.length && waterConsumed[index + 1] == 0) {
+              if (index + 1 < waterConsumed.length &&
+                  waterConsumed[index + 1] == 0) {
                 waterConsumed.removeAt(index + 1);
                 firestoreService.deleteCup(index.toString());
               }
@@ -178,13 +180,19 @@ class _WaterIntakeState extends State<WaterIntake> {
                   onTap: () {
                     decreaseWaterPerCup();
                   },
-                  child: Image(image: AssetImage('assets/icons/btn_minus.png'), height: 60, width: 60,),
+                  child: const Image(
+                    image: AssetImage('assets/icons/btn_minus.png'),
+                    height: 60,
+                    width: 60,
+                  ),
                 ),
 
                 // lượng nước mỗi ly
                 Text(
                   '$waterPerCup ml per cup',
-                  style: TextStyle(color: htaPrimaryColors.shade500,),
+                  style: TextStyle(
+                    color: htaPrimaryColors.shade500,
+                  ),
                 ),
 
                 // dấu cộng
@@ -192,21 +200,30 @@ class _WaterIntakeState extends State<WaterIntake> {
                   onTap: () {
                     increaseWaterPerCup();
                   },
-                  child: Image(image: AssetImage('assets/icons/btn_plus.png'), height: 60, width: 60,),
+                  child: const Image(
+                    image: AssetImage('assets/icons/btn_plus.png'),
+                    height: 60,
+                    width: 60,
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             // mấy cái ly
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(), // Ngăn chặn cuộn
+              physics: const NeverScrollableScrollPhysics(), // Ngăn chặn cuộn
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: waterConsumed.length,
+              itemCount: (2000 % waterPerCup == 0)
+                  ? (2000 ~/ waterPerCup)
+                  : (2000 ~/ waterPerCup +
+                      1), // Số lượng mục muốn hiển thị lây số nguyên, nếu ít hơn 2000ml thì thêm 1 ly, nếu nhiều hơn 2000ml thì khỏi
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
@@ -219,8 +236,8 @@ class _WaterIntakeState extends State<WaterIntake> {
                     child: Center(
                       child: Image(
                         image: waterConsumed[index] != 0
-                            ? AssetImage('assets/icons/cup_filled.png')
-                            : AssetImage('assets/icons/cup_empty.png'),
+                            ? const AssetImage('assets/icons/cup_filled.png')
+                            : const AssetImage('assets/icons/cup_empty.png'),
                       ),
                     ),
                   ),
@@ -236,7 +253,9 @@ class _WaterIntakeState extends State<WaterIntake> {
               child: Text(
                 '${calculateWaterIntake()}/2000 ml',
                 style: TextStyle(
-                  color: (calculateWaterIntake() >= 2000) ? htaStatusColors.shade200 : htaStatusColors.shade900,
+                  color: (calculateWaterIntake() >= 2000)
+                      ? htaStatusColors.shade200
+                      : htaStatusColors.shade900,
                 ),
               ),
             ),

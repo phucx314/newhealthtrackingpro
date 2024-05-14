@@ -14,6 +14,7 @@ import '../pages/dashboard.dart';
 import '../pages/my_account.dart';
 
 import '../pages/dashboard.dart';
+import '../pages/settings.dart';
 import '../services/auth_service.dart';
 
 class Sidebar extends StatelessWidget {
@@ -90,7 +91,7 @@ class Sidebar extends StatelessWidget {
                   //   height: 15,
                   // ),
                   SidebarItem(
-                    name: 'Dr.Zone (underdev)',
+                    name: 'Messages',
                     icon: Icons.local_hospital,
                     onTap: () => onItemTap(context, index: 3),
                   ),
@@ -192,10 +193,14 @@ class Sidebar extends StatelessWidget {
         break;
 
       // case 7: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
-      // case 8: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
+      case 8:
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SettingsPage()));
+        break;
       // case 9: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
       default:
-        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Dashboard()));
         break;
     }
   }

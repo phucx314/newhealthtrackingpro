@@ -1,6 +1,6 @@
-import 'package:app3/components/input_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:app3/models/plan.dart';
+import 'input_plan.dart';
 import 'input_recipes.dart';
 
 class PlanCard extends StatelessWidget {
@@ -12,54 +12,66 @@ class PlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF4D8BAA),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      plan.imagePath ?? 'placeholder_image_path.png',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
+      child: GestureDetector(
+        onTap: () {
+          String id = plan.id;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Inputplans(
+                planId: id,
+              ),
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4D8BAA),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        plan.imagePath ?? 'placeholder_image_path.png',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        plan.description ?? 'No description available',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          plan.description ?? 'No description available',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      _buildDetailText(plan.timeFund),
-                      _buildIconButton(context),
-                    ],
+                        _buildDetailText(plan.timeFund),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -104,30 +116,30 @@ class PlanCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIconButton(BuildContext context) {
-    return Positioned(
-      top: 0,
-      right: 0,
-      child: Container(
-        alignment: Alignment.topRight,
-        child: IconButton(
-          onPressed: () {
-            String id = plan.id;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Inputplans(
-                  planId: id,
-                ),
-              ),
-            );
-          },
-          icon: const Icon(
-            Icons.more_horiz,
-            color: Color(0xFF4D8BAA),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildIconButton(BuildContext context) {
+  //   return Positioned(
+  //     top: 0,
+  //     right: 0,
+  //     child: Container(
+  //       alignment: Alignment.topRight,
+  //       child: IconButton(
+  //         onPressed: () {
+  //           String id = plan.id;
+  //           Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //               builder: (context) => Inputplans(
+  //                 planId: id,
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //         icon: const Icon(
+  //           Icons.more_horiz,
+  //           color: Color(0xFF4D8BAA),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

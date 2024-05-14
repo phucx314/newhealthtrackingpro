@@ -12,13 +12,14 @@ import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
 
+String? imagePath;
+
 class InputRecipes extends StatelessWidget {
   InputRecipes({super.key, this.createRecipe, this.recipeId});
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
   final TextEditingController idController = TextEditingController();
-  String? imagePath;
   final String? recipeId;
   final VoidCallback? createRecipe;
   final CollectionReference _reference =
@@ -50,6 +51,7 @@ class InputRecipes extends StatelessWidget {
       await referenceImageToUpload.putFile(File(file.path));
       //Success: get the download URL
       imageUrl = await referenceImageToUpload.getDownloadURL();
+      imagePath = imageUrl;
     } catch (error) {
       //some error occurred
     }
@@ -68,6 +70,7 @@ class InputRecipes extends StatelessWidget {
     if (imageUrl.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Please upload an image')));
+      imagePath = imageUrl;
       return;
     }
 
@@ -116,25 +119,90 @@ class InputRecipes extends StatelessWidget {
     }
   }
 
-  void _editRecipe(BuildContext context) {
-    // Điều hướng đến màn hình sửa
-    // Ví dụ:
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => EditRecipeScreen()),
-    // );
+  Future<void> updateRecipe(BuildContext context, String id) async {
+    if (id.isNotEmpty) {
+      // Xác nhận xóa
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Confirm"),
+            content: const Text("Are you sure you want to update this recipe?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Đóng hộp thoại
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  firestoreService.updateRecipe(
+                      idController.text,
+                      descriptionController.text,
+                      imageUrl,
+                      detailController.text,
+                      false,
+                      "");
+                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Recipe updated'),
+                    ),
+                  );
+                  // Điều hướng trở lại trang PlanPage
+                  Navigator.pop(context);
+                },
+                child: const Text("Update"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getRecipeById(
+      String id) async {
+    try {
+      // Thực hiện truy vấn để lấy tài liệu từ Firestore dựa trên trường 'id' và giá trị cụ thể
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('recipes')
+              .where('id', isEqualTo: id)
+              .limit(1) // Giới hạn số lượng tài liệu trả về chỉ cần 1 document
+              .get();
+
+      // Nếu có tài liệu phù hợp, trả về document đầu tiên
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        // Nếu không có tài liệu phù hợp, trả về null
+        return null;
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình truy vấn Firestore
+      print('Error getting plan by id: $e');
+      return null;
+    }
   }
 
   Future<void> _getRecipeById() async {
     idController.text = recipeId!;
-
-    Recipe recipe;
-    await firestoreService.getRecipe(idController.text).then((value) {
-      recipe = value;
-      descriptionController.text = recipe.description;
-      detailController.text = recipe.detail;
-      imageUrl = recipe.imagePath;
-    });
+    // Plan plan;
+    DocumentSnapshot<Map<String, dynamic>>? planDocument =
+        await getRecipeById(idController.text);
+    if (planDocument != null) {
+      // Xử lý khi tìm thấy document
+      print('Found Recipes document');
+      descriptionController.text = planDocument['description'];
+      detailController.text = planDocument['detail'];
+      imagePath = planDocument['imagePath'];
+      // print(imagePath);
+    } else {
+      // Xử lý khi không tìm thấy document
+      print('Recipes document with id "001" not found.');
+    }
   }
 
   @override
@@ -157,15 +225,33 @@ class InputRecipes extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Create new recipe!",
-                    style: TextStyle(
+                    recipeId != null ? "Your Recipes" : "Create new recipe!",
+                    style: const TextStyle(
                       fontSize: 40,
                       color: Color(0xFF4D8BAA),
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                height: 120,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4D8BAA),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    imagePath ?? 'placeholder_image_path.png',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
                   ),
                 ),
               ),
@@ -215,24 +301,6 @@ class InputRecipes extends StatelessWidget {
             const SizedBox(height: 25),
             Padding(
               padding: const EdgeInsets.all(25.0),
-              child: SizedBox(
-                height: 50,
-                child: GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    width: screenSize.width * 0.9,
-                    height: screenSize.height * 0.2,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(Icons.add_a_photo),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
@@ -268,15 +336,21 @@ class InputRecipes extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {
-                        // Xử lý khi nhấn nút sửa
-                      },
+                      onPressed: () => updateRecipe(context, idController.text),
                       icon: const Icon(
                         Icons.edit,
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
-                    const SizedBox(width: 25),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: _pickImage,
+                      icon: const Icon(Icons.add_a_photo),
+                      color: const Color(0xFF4D8BAA),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    )
                   ],
                 ),
               ),

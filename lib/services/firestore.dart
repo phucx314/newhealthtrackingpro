@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import '../models/recipe.dart';
 
 class FirestoreService {
-
   // RECIPES
   final CollectionReference recipes =
       FirebaseFirestore.instance.collection('recipes');
@@ -78,6 +77,37 @@ class FirestoreService {
     }
   }
 
+  Future<void> updateRecipe(
+      String id,
+      String newDescription,
+      String newImagePath,
+      String newDetail,
+      bool newFavorites,
+      String newAuthor) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await recipes.where('id', isEqualTo: id).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.update({
+            'description': newDescription,
+            'imagePath': newImagePath,
+            'detail': newDetail,
+            'favorites': newFavorites,
+            'author': newAuthor
+          });
+        });
+        print('Recipe with ID $id updated successfully.');
+      } else {
+        print('Recipe with ID $id not found');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình cập nhật Firestore
+      print('Error updating recipe: $e');
+    }
+  }
+
   // PLAN
   final CollectionReference plans =
       FirebaseFirestore.instance.collection('plans');
@@ -143,9 +173,39 @@ class FirestoreService {
     }
   }
 
+  Future<void> updatePlan(
+    String id,
+    String newDescription,
+    String newImagePath,
+    String newtimeFund,
+  ) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await plans.where('id', isEqualTo: id).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.update({
+            'description': newDescription,
+            'imagePath': newImagePath,
+            'timeFund': newtimeFund,
+          });
+        });
+        print('Plan with ID $id updated successfully.');
+      } else {
+        print('Plan with ID $id not found');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình cập nhật Firestore
+      print('Error updating Plan: $e');
+    }
+  }
+
   // WATER CUPS
-  final CollectionReference waterCups = FirebaseFirestore.instance.collection('water_cups');
-  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc('uid');
+  final CollectionReference waterCups =
+      FirebaseFirestore.instance.collection('water_cups');
+  DocumentReference userRef =
+      FirebaseFirestore.instance.collection('users').doc('uid');
 
   Future<void> addCup(
     String cupID,
@@ -175,7 +235,8 @@ class FirestoreService {
   }
 
   Future<void> deleteCup(String cupID) async {
-    QuerySnapshot querySnapshot = await waterCups.where('cupID', isEqualTo: cupID).get();
+    QuerySnapshot querySnapshot =
+        await waterCups.where('cupID', isEqualTo: cupID).get();
 
     if (querySnapshot.docs.isNotEmpty) {
       querySnapshot.docs.forEach((doc) async {
@@ -187,19 +248,20 @@ class FirestoreService {
   }
 
   Future<bool> hasWaterConsumedData(String uid) async {
-    QuerySnapshot snapshot = await waterCups.where('uid', isEqualTo: uid).limit(1).get();
+    QuerySnapshot snapshot =
+        await waterCups.where('uid', isEqualTo: uid).limit(1).get();
     return snapshot.docs.isNotEmpty;
   }
 
-
   Future<List<int>> getWaterConsumedData(String uid) async {
     try {
-      QuerySnapshot querySnapshot = await waterCups.where('uid', isEqualTo: uid).get();
+      QuerySnapshot querySnapshot =
+          await waterCups.where('uid', isEqualTo: uid).get();
       List<int> waterConsumedData = [];
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         waterConsumedData.add(data['waterConsumed']);
-      });
+      }
       return waterConsumedData;
     } catch (error) {
       throw Exception('Error fetching water consumed data: $error');
