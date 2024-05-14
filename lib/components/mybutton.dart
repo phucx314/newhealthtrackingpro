@@ -5,6 +5,7 @@ class Button extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.title,
+    this.height =60,
     this.width = 100,
     // required this.left,
     // required this.right,
@@ -16,6 +17,7 @@ class Button extends StatelessWidget {
   final Function()? onTap;
   final String title;
   final double width;
+  final double height;
   // final double left;
   // final double right;
   final Color color;
@@ -28,7 +30,7 @@ class Button extends StatelessWidget {
       onTap:
           onTap, // Đặt onTap ở đây để toàn bộ Container nhận được sự kiện onTap
       child: Container(
-        height: 60,
+        height: height,
         width: width,
         padding: const EdgeInsets.all(10),
         // margin: EdgeInsets.fromLTRB(left, 0, right, 0),

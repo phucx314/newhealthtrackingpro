@@ -13,19 +13,20 @@ import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
 
+String? imagePath;
+
 class Inputplans extends StatelessWidget {
   Inputplans({super.key, this.createPlan, this.planId});
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController timeFundController = TextEditingController();
   final TextEditingController idController = TextEditingController();
-  String? imagePath;
   final String? planId;
   final VoidCallback? createPlan;
   final CollectionReference _reference =
       FirebaseFirestore.instance.collection('plans');
   String imageUrl = '';
-
+  // late Plan plan;
   Future<void> _pickImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -88,6 +89,47 @@ class Inputplans extends StatelessWidget {
     Navigator.pop(context);
   }
 
+  Future<void> updateRecipe(BuildContext context, String id) async {
+    if (id.isNotEmpty) {
+      // Xác nhận xóa
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Confirm"),
+            content: const Text("Are you sure you want to update this plan?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Đóng hộp thoại
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  firestoreService.updatePlan(
+                      idController.text,
+                      descriptionController.text,
+                      imageUrl,
+                      timeFundController.text);
+                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Plan updated'),
+                    ),
+                  );
+                  // Điều hướng trở lại trang PlanPage
+                  Navigator.pop(context);
+                },
+                child: const Text("Update"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   void _onBackPressed(BuildContext context) {
     Navigator.of(context).pop();
   }
@@ -110,23 +152,53 @@ class Inputplans extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  Future<void> _getRecipeById() async {
-    idController.text = planId!;
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getPlanById(String id) async {
+    try {
+      // Thực hiện truy vấn để lấy tài liệu từ Firestore dựa trên trường 'id' và giá trị cụ thể
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('plans')
+              .where('id', isEqualTo: id)
+              .limit(1) // Giới hạn số lượng tài liệu trả về chỉ cần 1 document
+              .get();
 
-    Plan plan;
-    await firestoreService.getPlan(idController.text).then((value) {
-      plan = value;
-      descriptionController.text = plan.description;
-      timeFundController.text = plan.timeFund;
-      imageUrl = plan.imagePath;
-    });
+      // Nếu có tài liệu phù hợp, trả về document đầu tiên
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        // Nếu không có tài liệu phù hợp, trả về null
+        return null;
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra trong quá trình truy vấn Firestore
+      print('Error getting plan by id: $e');
+      return null;
+    }
+  }
+
+  Future<void> _getPlanById() async {
+    idController.text = planId!;
+    // Plan plan;
+    DocumentSnapshot<Map<String, dynamic>>? planDocument =
+        await getPlanById(idController.text);
+    if (planDocument != null) {
+      // Xử lý khi tìm thấy document
+      print('Found plan document');
+      descriptionController.text = planDocument['description'];
+      timeFundController.text = planDocument['timeFund'];
+      imagePath = planDocument['imagePath'];
+      // print(imagePath);
+    } else {
+      // Xử lý khi không tìm thấy document
+      print('Plan document with id "001" not found.');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     if (planId != null) {
-      _getRecipeById();
+      _getPlanById();
     }
     return Scaffold(
       backgroundColor: const Color(0xFFE9F0F5),
@@ -151,6 +223,24 @@ class Inputplans extends StatelessWidget {
                       color: Color(0xFF4D8BAA),
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                height: 120,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4D8BAA),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    imagePath ?? 'placeholder_image_path.png',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
                   ),
                 ),
               ),
@@ -197,25 +287,6 @@ class Inputplans extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: SizedBox(
-                height: 50,
-                child: GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    width: screenSize.width * 0.9,
-                    height: screenSize.height * 0.2,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(Icons.add_a_photo),
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: Container(
@@ -252,15 +323,21 @@ class Inputplans extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {
-                        // Xử lý khi nhấn nút sửa
-                      },
+                      onPressed: () => updateRecipe(context, idController.text),
                       icon: const Icon(
                         Icons.edit,
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
                     const SizedBox(width: 25),
+                    IconButton(
+                      onPressed: _pickImage,
+                      icon: const Icon(Icons.add_a_photo),
+                      color: const Color(0xFF4D8BAA),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    )
                   ],
                 ),
               ),
