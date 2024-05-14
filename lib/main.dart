@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'auth/auth_gate.dart';
+import 'components/tip1.dart';
 import 'pages/recipes.dart';
 
 void main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: PlanOrRecipe(),
-      home: AuthGate(),
+      home: Tip1Page(),
     );
   }
 }

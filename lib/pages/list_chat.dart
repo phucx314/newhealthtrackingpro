@@ -42,7 +42,7 @@ class _ListChatState extends State<ListChat> {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: htaPrimaryColors.shade50,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
