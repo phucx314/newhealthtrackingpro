@@ -35,6 +35,33 @@ class _ListChatState extends State<ListChat> {
             const SizedBox(
               height: 20,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25.0, right: 25, top: 10, bottom: 10),
+                      child: Text(
+                        'List your friends',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: htaPrimaryColors.shade500,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             Expanded(
               // Use Expanded to allow the ListView to take remaining space.
               child: _buildUserList(),
@@ -95,9 +122,10 @@ class _ListChatState extends State<ListChat> {
                     width: 25,
                   ),
                   Text(
-                    email,
-                    style: const TextStyle(
+                    document['fullname'],
+                    style: TextStyle(
                       fontSize: 15,
+                      color: htaPrimaryColors.shade500,
                     ),
                   ),
                 ],

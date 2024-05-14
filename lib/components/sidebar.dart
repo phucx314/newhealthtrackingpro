@@ -91,7 +91,7 @@ class Sidebar extends StatelessWidget {
                   //   height: 15,
                   // ),
                   SidebarItem(
-                    name: 'Dr.Zone (underdev)',
+                    name: 'Messages',
                     icon: Icons.local_hospital,
                     onTap: () => onItemTap(context, index: 3),
                   ),
