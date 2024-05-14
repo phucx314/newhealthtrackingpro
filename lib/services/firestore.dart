@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import '../models/recipe.dart';
 
 class FirestoreService {
-
   // RECIPES
   final CollectionReference recipes =
       FirebaseFirestore.instance.collection('recipes');
@@ -78,7 +77,6 @@ class FirestoreService {
     }
   }
 
-<<<<<<< HEAD
   Future<void> updateRecipe(
       String id,
       String newDescription,
@@ -110,10 +108,7 @@ class FirestoreService {
     }
   }
 
-  ///P L A N
-=======
   // PLAN
->>>>>>> c2c06ab960e85d1ca3c87cef719cac692ee7ad25
   final CollectionReference plans =
       FirebaseFirestore.instance.collection('plans');
 
@@ -178,7 +173,6 @@ class FirestoreService {
     }
   }
 
-<<<<<<< HEAD
   Future<void> updatePlan(
     String id,
     String newDescription,
@@ -204,10 +198,14 @@ class FirestoreService {
     } catch (e) {
       // Xử lý nếu có lỗi xảy ra trong quá trình cập nhật Firestore
       print('Error updating Plan: $e');
-=======
+    }
+  }
+
   // WATER CUPS
-  final CollectionReference waterCups = FirebaseFirestore.instance.collection('water_cups');
-  DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc('uid');
+  final CollectionReference waterCups =
+      FirebaseFirestore.instance.collection('water_cups');
+  DocumentReference userRef =
+      FirebaseFirestore.instance.collection('users').doc('uid');
 
   Future<void> addCup(
     String cupID,
@@ -237,7 +235,8 @@ class FirestoreService {
   }
 
   Future<void> deleteCup(String cupID) async {
-    QuerySnapshot querySnapshot = await waterCups.where('cupID', isEqualTo: cupID).get();
+    QuerySnapshot querySnapshot =
+        await waterCups.where('cupID', isEqualTo: cupID).get();
 
     if (querySnapshot.docs.isNotEmpty) {
       querySnapshot.docs.forEach((doc) async {
@@ -249,23 +248,23 @@ class FirestoreService {
   }
 
   Future<bool> hasWaterConsumedData(String uid) async {
-    QuerySnapshot snapshot = await waterCups.where('uid', isEqualTo: uid).limit(1).get();
+    QuerySnapshot snapshot =
+        await waterCups.where('uid', isEqualTo: uid).limit(1).get();
     return snapshot.docs.isNotEmpty;
   }
 
-
   Future<List<int>> getWaterConsumedData(String uid) async {
     try {
-      QuerySnapshot querySnapshot = await waterCups.where('uid', isEqualTo: uid).get();
+      QuerySnapshot querySnapshot =
+          await waterCups.where('uid', isEqualTo: uid).get();
       List<int> waterConsumedData = [];
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         waterConsumedData.add(data['waterConsumed']);
-      });
+      }
       return waterConsumedData;
     } catch (error) {
       throw Exception('Error fetching water consumed data: $error');
->>>>>>> c2c06ab960e85d1ca3c87cef719cac692ee7ad25
     }
   }
 }

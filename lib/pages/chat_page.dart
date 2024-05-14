@@ -28,13 +28,37 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final ScrollController _scrollController = ScrollController();
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
           widget.receiverUserId, _messageController.text);
       _messageController.text = '';
+      _scrollToBottom();
+      _closeKeyboard();
     }
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  void _closeKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,26 +81,29 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          Expanded(child: _builMessageList()),
+          Expanded(child: _buildMessageList()),
           _buildMessageInput(),
         ],
       ),
     );
   }
 
-  Widget _builMessageList() {
+  Widget _buildMessageList() {
     return StreamBuilder(
       stream: _chatService.getMessages(
           widget.receiverUserId, _firebaseAuth.currentUser!.uid),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text('Error${snapshot.error}');
+          return Text('Error: ${snapshot.error}');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading..');
+          return const Text('Loading...');
         }
 
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+
         return ListView(
+          controller: _scrollController,
           children: snapshot.data!.docs
               .map((document) => _buildMessageItem(document))
               .toList(),

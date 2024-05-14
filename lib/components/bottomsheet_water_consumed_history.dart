@@ -4,9 +4,9 @@ import 'package:app3/colors/color_set.dart';
 import 'package:app3/styles/box_shadow.dart';
 import 'package:flutter/material.dart';
 
-
-
 class WaterConsumedHistory extends StatefulWidget {
+  const WaterConsumedHistory({super.key});
+
   @override
   State<WaterConsumedHistory> createState() => _WaterConsumedHistoryState();
 }
