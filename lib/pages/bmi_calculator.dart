@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:app3/pages/planpage.dart';
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
 import '../components/appbar.dart';
@@ -166,7 +167,10 @@ class _BMIState extends State<BMI> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Button(
-                              onTap: () {},
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlanPage())),
                               title: 'Find you plan',
                               width:
                                   (MediaQuery.of(context).size.width - 50) / 2,
