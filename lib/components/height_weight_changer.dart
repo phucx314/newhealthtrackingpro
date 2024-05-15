@@ -155,7 +155,7 @@ class _HeightWeightChangerState extends State<HeightWeightChanger> {
                   ),
 
                   Text(
-                    '$height cm',
+                    '${(height).toStringAsFixed(1)} cm',
                     style: TextStyle(color: htaPrimaryColors.shade500,),
                   ),
 
@@ -189,7 +189,7 @@ class _HeightWeightChangerState extends State<HeightWeightChanger> {
                   ),
 
                   Text(
-                    '$weight kg',
+                    '${(weight).toStringAsFixed(1)} kg',
                     style: TextStyle(color: htaPrimaryColors.shade500,),
                   ),
 
