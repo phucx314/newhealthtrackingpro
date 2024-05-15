@@ -49,7 +49,7 @@ class _ListChatState extends State<ListChat> {
                       padding: const EdgeInsets.only(
                           left: 25.0, right: 25, top: 10, bottom: 10),
                       child: Text(
-                        'List your friends',
+                        'Your contacts',
                         style: TextStyle(
                           fontSize: 30,
                           color: htaPrimaryColors.shade500,
