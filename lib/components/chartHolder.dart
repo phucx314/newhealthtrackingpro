@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../colors/color_set.dart';
+import '../pages/activ_screen.dart';
 import '../styles/box_shadow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -223,7 +224,12 @@ class _ChartHolderState extends State<ChartHolder> {
                 SizedBox(width: 15,),
                 Expanded(
                   child: Button(
-                    onTap: () {}, 
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ActivityScreen()),
+                      );
+                    }, 
                     title: 'Burn calories',
                     height: 40,
                   ),
