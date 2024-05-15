@@ -171,7 +171,7 @@ class _BMIState extends State<BMI> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => PlanPage())),
-                              title: 'Find you plan',
+                              title: 'Find your plan',
                               width:
                                   (MediaQuery.of(context).size.width - 50) / 2,
                               color: htaPrimaryColors.shade50,
