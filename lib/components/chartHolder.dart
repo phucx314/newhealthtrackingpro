@@ -1,15 +1,68 @@
+import 'package:app3/components/mybutton.dart';
+import 'package:app3/pages/food_scr.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChartHolder extends StatelessWidget {
-  ChartHolder({super.key, required this.consumedValue, required this.burnedValue});
+class ChartHolder extends StatefulWidget {
+  ChartHolder({Key? key, required this.consumedValue, required this.burnedValue});
 
-  final double consumedValue;
-  final double burnedValue;
-  
+  double consumedValue;
+  double burnedValue;
+
+  @override
+  State<ChartHolder> createState() => _ChartHolderState();
+}
+
+class _ChartHolderState extends State<ChartHolder> {
+  // Hàm để cập nhật consumedValue vào Firestore
+  void saveConsumedValueToFirestore(double consumedValue) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      User? userCurrent = auth.currentUser;
+      if (userCurrent != null) {
+        String uid = userCurrent.uid;
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update({'consumedValue': consumedValue});
+        print('Consumed value updated successfully.');
+      }
+    } catch (e) {
+      print('Error updating consumed value: $e');
+    }
+  }
+
+  double consumedValue = 0; // Khởi tạo consumedValue
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDataFromFirestore(); // Gọi hàm fetchDataFromFirestore khi widget được khởi tạo
+  }
+
+  // Hàm để fetch dữ liệu từ Firestore
+  void fetchDataFromFirestore() async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      User? userCurrent = auth.currentUser;
+      if (userCurrent != null) {
+        String uid = userCurrent.uid;
+        DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        // Lấy giá trị consumedValue từ snapshot và cập nhật vào state
+        setState(() {
+          consumedValue = snapshot.data()?['consumedValue'] ?? 0;
+        });
+      }
+    } catch (e) {
+      print('Error fetching data from Firestore: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +100,7 @@ class ChartHolder extends StatelessWidget {
                       children: [
                         // số
                         Text(
-                          '2000',
+                          '${(widget.consumedValue).truncate()}',
                           style: TextStyle(
                             color: htaPrimaryColors.shade500,
                             fontWeight: FontWeight.bold,
@@ -83,14 +136,14 @@ class ChartHolder extends StatelessWidget {
                                 PieChartSectionData(
                                   color: htaPrimaryColors
                                       .shade100,
-                                  value: consumedValue,
+                                  value: widget.consumedValue,
                                   radius: 10,
                                   title: '',
                                 ),
                                 PieChartSectionData(
                                   color: htaPrimaryColors
                                       .shade500,
-                                  value: burnedValue,
+                                  value: (widget.burnedValue+widget.consumedValue)-widget.burnedValue,
                                   title: '',
                                   radius: 10,
                                 ),
@@ -104,7 +157,7 @@ class ChartHolder extends StatelessWidget {
                         // số
                         Text(
                           textAlign: TextAlign.center,
-                          '${(consumedValue-burnedValue).truncate()}' '\nremaining',
+                          '${(widget.consumedValue-widget.burnedValue).truncate()}' '\nremaining',
                           style: TextStyle(
                             color: htaPrimaryColors.shade500,
                             fontWeight: FontWeight.bold,
@@ -122,7 +175,7 @@ class ChartHolder extends StatelessWidget {
                       children: [
                         // số
                         Text(
-                          '500',
+                          '${(widget.burnedValue).truncate()}',
                           style: TextStyle(
                             color: htaPrimaryColors.shade500,
                             fontWeight: FontWeight.bold,
@@ -148,21 +201,35 @@ class ChartHolder extends StatelessWidget {
               height: 15,
             ),
             
-            // sleep
-            const Text(
-              'Sleep',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+            // add consumptions hoặc burn
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Button(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodScreen()),
+                      );
+                    }, 
+                    title: 'Add calories',
+                    height: 40,
+                    color: htaPrimaryColors.shade50,
+                    borderColor: htaPrimaryColors.shade500,
+                    textColor: htaPrimaryColors.shade500,
+                  ),
+                ),
+                SizedBox(width: 15,),
+                Expanded(
+                  child: Button(
+                    onTap: () {}, 
+                    title: 'Burn calories',
+                    height: 40,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            // chỗ này là cái sleep stats bar chart
-            Container(
-              height: 120, // Đã sửa lại từ 120
-            )
-            // nút xem chi tiết
           ],
         ),
       ),

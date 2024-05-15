@@ -181,7 +181,7 @@ class Dashboard extends StatelessWidget {
                       ),
 
                       // mấy cái chart (khó làm quá để sau)
-                      ChartHolder(consumedValue: 2000, burnedValue: 500),
+                      ChartHolder(consumedValue: 2000, burnedValue: 1500),
                       const SizedBox(
                         height: 25,
                       ),

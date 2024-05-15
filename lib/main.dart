@@ -5,6 +5,7 @@ import 'package:app3/pages/dashboard.dart';
 import 'package:app3/pages/home_page.dart';
 import 'package:app3/pages/planpage.dart';
 import 'package:app3/pages/signup.dart';
+import 'package:app3/test_data/testfood.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ import 'pages/recipes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // addFoodsToFirestore();
   runApp(const MyApp());
 }
 
