@@ -31,13 +31,13 @@ class _WaterIntakeState extends State<WaterIntake> {
 
   // Phương thức để đọc dữ liệu từ Firestore và cập nhật trạng thái của ứng dụng
   Future<void> _fetchWaterConsumedData() async {
-    String? uid = await firestoreService.getCurrentUserUID();
-    if (uid != null) {
-      bool hasData = await firestoreService.hasWaterConsumedData(uid);
+    String? email = await firestoreService.getCurrentUserUID();
+    if (email != null) {
+      bool hasData = await firestoreService.hasWaterConsumedData(email);
       List<int> waterData;
 
       if (hasData) {
-        waterData = await firestoreService.getWaterConsumedData(uid);
+        waterData = await firestoreService.getWaterConsumedData(email);
         // get được mấy ly nước đầy rồi thì add thêm ly nước trống phía sau
         waterData.add(0);
       } else {
