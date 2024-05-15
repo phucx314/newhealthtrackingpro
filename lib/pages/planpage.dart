@@ -41,7 +41,7 @@ class PlanPage extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
-                child: MyAppBar(username: "Rosser"),
+                child: MyAppBar(),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),

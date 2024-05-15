@@ -41,7 +41,7 @@ class _BMIState extends State<BMI> {
                     height: 25,
                   ),
                   //appbar
-                  MyAppBar(username: 'username'),
+                  MyAppBar(),
 
                   SizedBox(
                     height: 25,
