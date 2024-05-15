@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../colors/color_set.dart';
 import '../components/appbar.dart';
+import '../components/height_weight_changer.dart';
 import '../components/mybutton.dart';
 import '../components/sidebar.dart';
 import '../styles/box_shadow.dart';
@@ -97,95 +98,75 @@ class _MyAccountState extends State<MyAccount> {
     }
   }
 
-  void showUpdateUserInfoDialog(
-      BuildContext context, Map<String, dynamic> userData) {
-    TextEditingController fullnameController =
-        TextEditingController(text: userData['fullname'] ?? '');
-    TextEditingController emailController =
-        TextEditingController(text: userData['email'] ?? '');
-    TextEditingController phoneNumberController =
-        TextEditingController(text: userData['phoneNumber'] ?? '');
-    TextEditingController heightController = TextEditingController(
-        text: userData['height'] != null ? userData['height'].toString() : '');
-    TextEditingController ageController = TextEditingController(
-        text: userData['age'] != null ? userData['age'].toString() : '');
-    TextEditingController weightController = TextEditingController(
-        text: userData['weight'] != null ? userData['weight'].toString() : '');
+  void showUpdateUserInfoDialog(BuildContext context, Map<String, dynamic> userData) {
+  TextEditingController fullnameController =
+      TextEditingController(text: userData['fullname'] ?? '');
+  TextEditingController emailController =
+      TextEditingController(text: userData['email'] ?? '');
+  TextEditingController phoneNumberController =
+      TextEditingController(text: userData['phoneNumber'] ?? '');
+  TextEditingController heightController = TextEditingController(
+      text: userData['height'] != null ? userData['height'].toString() : '');
+  TextEditingController ageController = TextEditingController(
+      text: userData['age'] != null ? userData['age'].toString() : '');
+  TextEditingController weightController = TextEditingController(
+      text: userData['weight'] != null ? userData['weight'].toString() : '');
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: fullnameController,
-                onChanged: (value) => userData['fullname'] = value,
-                decoration: const InputDecoration(labelText: 'Full Name'),
-              ),
-              TextField(
-                controller: emailController,
-                onChanged: (value) => userData['email'] = value,
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
-              TextField(
-                controller: phoneNumberController,
-                onChanged: (value) => userData['phoneNumber'] = value,
-                decoration: const InputDecoration(labelText: 'Phone Number'),
-              ),
-              TextField(
-                controller: heightController,
-                onChanged: (value) {
-                  if (double.tryParse(value) != null) {
-                    userData['height'] = double.parse(value);
-                  }
-                },
-                decoration: const InputDecoration(labelText: 'Height'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: ageController,
-                onChanged: (value) {
-                  if (double.tryParse(value) != null) {
-                    userData['age'] = double.parse(value);
-                  }
-                },
-                decoration: const InputDecoration(labelText: 'Age'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: weightController,
-                onChanged: (value) {
-                  if (double.tryParse(value) != null) {
-                    userData['weight'] = double.parse(value);
-                  }
-                },
-                decoration: const InputDecoration(labelText: 'Weight'),
-                keyboardType: TextInputType.number,
-              ),
-            ],
-          ),
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: fullnameController,
+              onChanged: (value) => userData['fullname'] = value,
+              decoration: const InputDecoration(labelText: 'Full Name'),
+            ),
+            TextField(
+              controller: emailController,
+              onChanged: (value) => userData['email'] = value,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: phoneNumberController,
+              onChanged: (value) => userData['phoneNumber'] = value,
+              decoration: const InputDecoration(labelText: 'Phone Number'),
+            ),
+            TextField(
+              controller: heightController,
+              onChanged: (value) => userData['height'] = double.tryParse(value) ?? 0,
+              decoration: const InputDecoration(labelText: 'Height'),
+            ),
+            TextField(
+              controller: weightController,
+              onChanged: (value) => userData['weight'] = double.tryParse(value) ?? 0,
+              decoration: const InputDecoration(labelText: 'Weight'),
+            ),
+          ],
         ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              updateUserInfo(userData);
-              getUserInfo();
-              Navigator.pop(context); // Close the dialog
-            },
-            child: const Text('Update'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-            },
-            child: const Text('Cancel'),
-          ),
-        ],
       ),
-    );
-  }
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            updateUserInfo(userData);
+            getUserInfo();
+            Navigator.pop(context); // Close the dialog
+          },
+          child: const Text('Update'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context); // Close the dialog
+          },
+          child: const Text('Cancel'),
+        ),
+      ],
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
