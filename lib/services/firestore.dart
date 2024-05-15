@@ -234,6 +234,19 @@ class FirestoreService {
     }
   }
 
+  // Hàm để lấy mail của người dùng đã đăng nhập
+  Future<String?> getCurrentUserEmail() async {
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Nếu người dùng đã đăng nhập, trả về mail của họ
+      return user.email;
+    } else {
+      // Nếu không có người dùng nào đăng nhập, trả về null
+      return 'guess';
+    }
+  }
+
   Future<void> deleteCup(String cupID) async {
     QuerySnapshot querySnapshot =
         await waterCups.where('cupID', isEqualTo: cupID).get();

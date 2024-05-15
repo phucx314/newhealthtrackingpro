@@ -53,11 +53,11 @@ class MyAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 // Avatar
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar1.png'),
-                  radius: 16,
-                ),
-                const SizedBox(width: 15),
+                // const CircleAvatar(
+                //   backgroundImage: AssetImage('assets/images/avatar1.png'),
+                //   radius: 16,
+                // ),
+                // const SizedBox(width: 15),
                 // Username
                 Expanded(
                   child: Align(

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app3/components/height_weight_changer.dart';
+import 'package:app3/services/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,11 @@ import '../models/tip_ball.dart';
 import '../styles/box_shadow.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  Dashboard({super.key});
+
+  final FirestoreService firestoreService = FirestoreService();
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,26 @@ class Dashboard extends StatelessWidget {
           child: Column(
             children: [
               // Phần không cuộn
-              const Padding(
+              Padding(
                 padding:
                     EdgeInsets.only(top: 25, bottom: 25, right: 15, left: 15),
-                child: MyAppBar(username: 'Alice'),
+                child: FutureBuilder<String?>(
+                  future: firestoreService.getCurrentUserEmail(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Trả về một widget placeholder nếu future đang loading
+                      return CircularProgressIndicator(); // Hoặc bất kỳ widget placeholder nào bạn muốn
+                    } else {
+                      if (snapshot.hasError) {
+                        // Xử lý lỗi nếu có
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        // Trả về MyAppBar với username khi future đã được giải quyết
+                        return MyAppBar(username: snapshot.data ?? 'Unknown'); // Mặc định là 'Unknown' nếu snapshot.data là null
+                      }
+                    }
+                  },
+                ),
               ),
               // Cuộn cả Column này
               Expanded(
@@ -138,6 +160,7 @@ class Dashboard extends StatelessWidget {
                       const SizedBox(
                         height: 25,
                       ),
+
                       // title Your stats today và channge date (?)
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
@@ -152,6 +175,7 @@ class Dashboard extends StatelessWidget {
                       const SizedBox(
                         height: 15,
                       ),
+
                       // mấy cái chart (khó làm quá để sau)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -288,6 +312,7 @@ class Dashboard extends StatelessWidget {
                               const SizedBox(
                                 height: 15,
                               ),
+                              
                               // sleep
                               const Text(
                                 'Sleep',

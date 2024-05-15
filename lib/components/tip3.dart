@@ -72,7 +72,7 @@ class NaturePharmacyPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const Dashboard()),
+                          builder: (context) =>  Dashboard()),
                     );
                   },
                   icon: const Icon(

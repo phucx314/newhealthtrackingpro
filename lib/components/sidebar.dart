@@ -160,7 +160,7 @@ class Sidebar extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const Dashboard()));
+            MaterialPageRoute(builder: (context) =>  Dashboard()));
         break;
       case 1:
         Navigator.push(
@@ -200,7 +200,7 @@ class Sidebar extends StatelessWidget {
       // case 9: Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard())); break;
       default:
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const Dashboard()));
+            MaterialPageRoute(builder: (context) =>  Dashboard()));
         break;
     }
   }
