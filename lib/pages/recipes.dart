@@ -52,7 +52,7 @@ class RecipePage extends StatelessWidget {
               //App bar
               const Padding(
                 padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
-                child: MyAppBar(username: "Rosser"),
+                child: MyAppBar(),
               ),
 
               //Backgorund button

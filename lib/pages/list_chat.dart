@@ -30,7 +30,7 @@ class _ListChatState extends State<ListChat> {
             // Assuming MyAppBar accepts a username argument.
             const Padding(
               padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
-              child: MyAppBar(username: "Rosser"),
+              child: MyAppBar(),
             ),
             const SizedBox(
               height: 20,

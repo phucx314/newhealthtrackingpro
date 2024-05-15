@@ -29,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                child: MyAppBar(username: "Rosser"),
+                child: MyAppBar(),
               ),
               Padding(
                 padding: const EdgeInsets.all(25.0),

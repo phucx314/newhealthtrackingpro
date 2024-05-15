@@ -209,9 +209,7 @@ class _MyAccountState extends State<MyAccount> {
                           right: 25,
                           left: 25,
                         ),
-                        child: MyAppBar(
-                          username: 'username',
-                        ),
+                        child: MyAppBar(),
                       ),
                       Column(
                         children: [

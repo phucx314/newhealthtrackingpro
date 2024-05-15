@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,19 +7,53 @@ import '../colors/color_set.dart';
 import '../styles/box_shadow.dart';
 import '../components/sidebar.dart'; // Import your SideBar widget
 
-class MyAppBar extends StatelessWidget {
+class MyAppBar extends StatefulWidget {
   final VoidCallback? onMenuPressed;
   final VoidCallback? onProfilePressed;
   final VoidCallback? onNotificationPressed;
-  final String username;
 
   const MyAppBar({
     super.key,
     this.onMenuPressed,
     this.onProfilePressed,
     this.onNotificationPressed,
-    required this.username,
   });
+
+  @override
+  _MyAppBarState createState() => _MyAppBarState();
+}
+
+class _MyAppBarState extends State<MyAppBar> {
+  String _username = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsername();
+  }
+
+  Future<void> _fetchUsername() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        setState(() {
+          _username = userDoc['fullname'] ?? 'No Name';
+        });
+      } else {
+        setState(() {
+          _username = 'Guest';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _username = 'Error';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +62,11 @@ class MyAppBar extends StatelessWidget {
       children: [
         // Menu button
         IconButton(
-          onPressed: () {
-            // Open sidebar
-            Scaffold.of(context).openDrawer();
-          },
+          onPressed: widget.onMenuPressed ??
+              () {
+                // Open sidebar
+                Scaffold.of(context).openDrawer();
+              },
           icon: Image.asset(
             'assets/icons/btn_menu.png',
             width: 30,
@@ -52,18 +89,11 @@ class MyAppBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Avatar
-                // const CircleAvatar(
-                //   backgroundImage: AssetImage('assets/images/avatar1.png'),
-                //   radius: 16,
-                // ),
-                // const SizedBox(width: 15),
-                // Username
                 Expanded(
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Hi, $username',
+                      'Hi, $_username',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
@@ -82,9 +112,7 @@ class MyAppBar extends StatelessWidget {
 
         // Notification button
         IconButton(
-          onPressed: () {
-            // Handle notification button pressed
-          },
+          onPressed: widget.onNotificationPressed,
           icon: Image.asset(
             'assets/icons/btn_noti.png',
             width: 35,

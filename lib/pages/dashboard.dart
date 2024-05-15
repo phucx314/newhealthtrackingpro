@@ -31,8 +31,6 @@ class Dashboard extends StatelessWidget {
 
   final FirestoreService firestoreService = FirestoreService();
 
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,7 +57,7 @@ class Dashboard extends StatelessWidget {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         // Trả về MyAppBar với username khi future đã được giải quyết
-                        return MyAppBar(username: snapshot.data ?? 'Unknown'); // Mặc định là 'Unknown' nếu snapshot.data là null
+                        return MyAppBar(); // Mặc định là 'Unknown' nếu snapshot.data là null
                       }
                     }
                   },
@@ -317,7 +315,7 @@ class Dashboard extends StatelessWidget {
                               const SizedBox(
                                 height: 15,
                               ),
-                              
+
                               // sleep
                               const Text(
                                 'Sleep',
