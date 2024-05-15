@@ -1,24 +1,25 @@
-import 'package:app3/pages/dashboard.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/dashboard.dart';
+
 void main() {
-  runApp(const Tip1Page());
+  runApp(const Tip2Page());
 }
 
-class Tip1Page extends StatelessWidget {
-  const Tip1Page({super.key});
+class Tip2Page extends StatelessWidget {
+  const Tip2Page({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WaterBenefitsPage(),
+      home: LaughBenefitsPage(),
     );
   }
 }
 
-class WaterBenefitsPage extends StatelessWidget {
-  const WaterBenefitsPage({super.key});
+class LaughBenefitsPage extends StatelessWidget {
+  const LaughBenefitsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +29,13 @@ class WaterBenefitsPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.blue],
+            colors: [Colors.yellow, Colors.yellowAccent],
           ),
         ),
-        child: Stack(
-          children: [
-            SafeArea(
-              child: Padding(
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,29 +61,29 @@ class WaterBenefitsPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade700,
+                          color: Colors.yellow.shade700,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            'Water Wonders:\nThe Benefits of Hydration',
+                            'Laugh Your Way\nto Health',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
+                              color: Colors.black,
+                              fontSize: 35,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 50),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.0),
                       child: Text(
-                        'Staying hydrated is crucial for overall health. Did you know that drinking enough water can improve digestion, regulate body temperature, and even help maintain clear skin?',
+                        "Laughter isn't just good for the soul; it's also beneficial for your health. It can reduce stress, boost your mood, and even improve cardiovascular health by increasing blood flow.",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 22,
                         ),
                       ),
@@ -90,16 +91,16 @@ class WaterBenefitsPage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Image.asset(
-                'assets/images/bottle.png', // Replace with your image asset path
-                height: 300,
-                fit: BoxFit.contain,
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Image.asset(
+                  'assets/images/laughing_person.png', // Replace with your image asset path
+                  height: 400,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

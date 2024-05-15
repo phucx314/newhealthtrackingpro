@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app3/components/height_weight_changer.dart';
+import 'package:app3/components/tip1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +9,9 @@ import '../colors/color_set.dart';
 import '../components/appbar.dart';
 import '../components/feature.dart';
 import '../components/sidebar.dart';
+import '../components/tip2.dart';
+import '../components/tip3.dart';
+import '../components/tip4.dart';
 import '../components/tip_ball.dart';
 import '../components/water_intake.dart';
 import '../models/tip_ball.dart';
@@ -46,57 +50,84 @@ class Dashboard extends StatelessWidget {
                           child: Row(
                             children: [
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipN8iFY73SaEL4LykuIilIW5kPkCJTlpbDcY5bfm?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🐅',
-                                  title: 'Just',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipN8iFY73SaEL4LykuIilIW5kPkCJTlpbDcY5bfm?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🐅',
+                                title: 'Just',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Tip1Page())),
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMa26UNcfFQoiuZrl8xUgNODCnK98csa8A4kdo3?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🦊',
-                                  title: 'Some',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMa26UNcfFQoiuZrl8xUgNODCnK98csa8A4kdo3?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🦊',
+                                title: 'Some',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Tip2Page())),
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipP9hAJjZL9wipy3NuCNv0CApZg2Y3rWJIq0TIzs?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🦆',
-                                  title: 'Random',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipP9hAJjZL9wipy3NuCNv0CApZg2Y3rWJIq0TIzs?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🦆',
+                                title: 'Random',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Tip3Page())),
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMMrDNs7ch3EvZzGVHKD1uNmYa9G7FG65XlfwM9?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🪳',
-                                  title: 'Facts',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMMrDNs7ch3EvZzGVHKD1uNmYa9G7FG65XlfwM9?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🪳',
+                                title: 'Facts',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Tip4Page())),
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipOP7zs4RFvacHhURlLDRGn13LGPGdyAtZn9VJYi?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🦐',
-                                  title: 'You',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipOP7zs4RFvacHhURlLDRGn13LGPGdyAtZn9VJYi?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🦐',
+                                title: 'You',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMYH6fLdc4O14Ga8G-_4QFooPSwIMGLokDbIs_H?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🐬',
-                                  title: 'Might',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipMYH6fLdc4O14Ga8G-_4QFooPSwIMGLokDbIs_H?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🐬',
+                                title: 'Might',
                               ),
                               const SizedBox(
                                 width: 15,
                               ),
                               TipBall(
-                                  imageUrl: 'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipM6mcq4w-jQU33N8LRl9NLuLMaj8Yb7iHPCpNXB?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
-                                  emoji: '🦏',
-                                  title: 'Like',
+                                imageUrl:
+                                    'https://photos.google.com/u/1/share/AF1QipNAbgiu0dGgFV6-PtY-HRANd7w3fVaykFiq6J-w7Dsew4SApm5Qene0uJc_mQUPNA/photo/AF1QipM6mcq4w-jQU33N8LRl9NLuLMaj8Yb7iHPCpNXB?key=YUZSWkMzdUI0cUk3YTA4YUs1QnBUQjNhajhCUHRB',
+                                emoji: '🦏',
+                                title: 'Like',
                               ),
                             ],
                           ),
@@ -196,7 +227,9 @@ class Dashboard extends StatelessWidget {
 
                       // cái box hiển thị cân nặng chiều cao
                       HeightWeightChanger(),
-                      SizedBox(height: 25,),
+                      SizedBox(
+                        height: 25,
+                      ),
 
                       // how much water j j đấy
                       const Padding(
@@ -236,25 +269,38 @@ class Dashboard extends StatelessWidget {
 
                       // row gồm mấy cái features khác
                       SingleChildScrollView(
-                        clipBehavior: Clip.none, // cái này fix lỗi mấy cái shadows bị clipped mất
+                        clipBehavior: Clip
+                            .none, // cái này fix lỗi mấy cái shadows bị clipped mất
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 25),
                           child: Row(
                             children: [
-                              Feature(title: 'BMI Calculator', icon: '🧮',),
+                              Feature(
+                                title: 'BMI Calculator',
+                                icon: '🧮',
+                              ),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(title: 'Diary', icon: '📓',),
+                              Feature(
+                                title: 'Diary',
+                                icon: '📓',
+                              ),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(title: 'Set goal', icon: '🎯',),
+                              Feature(
+                                title: 'Set goal',
+                                icon: '🎯',
+                              ),
                               SizedBox(
                                 width: 15,
                               ),
-                              Feature(title: 'Ask nutritionists', icon: '🧑‍⚕️',),
+                              Feature(
+                                title: 'Ask nutritionists',
+                                icon: '🧑‍⚕️',
+                              ),
                             ],
                           ),
                         ),

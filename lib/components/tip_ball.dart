@@ -5,48 +5,57 @@ import '../colors/color_set.dart';
 import '../models/tip_ball.dart';
 
 class TipBall extends StatelessWidget {
-  // final Tip tip;
+  final String imageUrl;
+  final String emoji;
+  final String title;
+  final VoidCallback? onTap; // Function to execute when tapped
 
-  final imageUrl;
-  final emoji;
-  final title;
-
-  const TipBall({super.key, required this.imageUrl, required this.emoji, required this.title});
+  const TipBall({
+    super.key,
+    required this.imageUrl,
+    required this.emoji,
+    required this.title,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // ảnh nền
-        Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: htaPrimaryColors.shade300, width: 3.0), // Đặt viền
-            borderRadius: BorderRadius.circular(30), // Đặt bo tròn cho viền
-          ),
-          child: CircleAvatar(
-            radius: 30.0,
-            backgroundImage: NetworkImage(imageUrl),
-            child: Center(
-              child: Text(
-                emoji,
-                style: TextStyle(fontSize: 24, shadows: <Shadow>[
-                  Shadow(
-                    // offset: Offset(5, 5),
-                    blurRadius: 30,
-                    color: Color.fromRGBO(0, 0, 0, 0.5),
+    return GestureDetector(
+      onTap: onTap, // Execute onTap function when tapped
+      child: Column(
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: htaPrimaryColors.shade300,
+                width: 3.0,
+              ),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: CircleAvatar(
+              radius: 30.0,
+              backgroundImage: NetworkImage(imageUrl),
+              child: Center(
+                child: Text(
+                  emoji,
+                  style: TextStyle(
+                    fontSize: 24,
+                    shadows: <Shadow>[
+                      Shadow(
+                        blurRadius: 30,
+                        color: Color.fromRGBO(0, 0, 0, 0.5),
+                      ),
+                    ],
                   ),
-                ]),
+                ),
               ),
             ),
           ),
-        ),
-
-        // tên tip
-        Text(title),
-      ],
+          Text(title),
+        ],
+      ),
     );
   }
 }
