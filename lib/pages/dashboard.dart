@@ -1,6 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app3/components/height_weight_changer.dart';
+import 'package:app3/models/recipe.dart';
+import 'package:app3/pages/bmi_calculator.dart';
+import 'package:app3/pages/list_chat.dart';
+import 'package:app3/pages/planpage.dart';
+import 'package:app3/pages/recipes.dart';
 import 'package:app3/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -405,6 +410,10 @@ class Dashboard extends StatelessWidget {
                               Feature(
                                 title: 'BMI Calculator',
                                 icon: '🧮',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const BMI())),
                               ),
                               SizedBox(
                                 width: 15,
@@ -412,6 +421,10 @@ class Dashboard extends StatelessWidget {
                               Feature(
                                 title: 'Diary',
                                 icon: '📓',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RecipePage())),
                               ),
                               SizedBox(
                                 width: 15,
@@ -419,6 +432,10 @@ class Dashboard extends StatelessWidget {
                               Feature(
                                 title: 'Set goal',
                                 icon: '🎯',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PlanPage())),
                               ),
                               SizedBox(
                                 width: 15,
@@ -426,6 +443,11 @@ class Dashboard extends StatelessWidget {
                               Feature(
                                 title: 'Ask nutritionists',
                                 icon: '🧑‍⚕️',
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListChat())),
                               ),
                             ],
                           ),
