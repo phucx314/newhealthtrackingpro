@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app3/components/height_weight_changer.dart';
-import 'package:app3/components/tip1.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +10,8 @@ import '../components/appbar.dart';
 import '../components/feature.dart';
 import '../components/sidebar.dart';
 import '../components/tip2.dart';
+import '../components/tip1.dart';
+
 import '../components/tip3.dart';
 import '../components/tip4.dart';
 import '../components/tip_ball.dart';
@@ -174,13 +176,112 @@ class Dashboard extends StatelessWidget {
                                 height: 15,
                               ),
                               // pie charts
-                              const SizedBox(
+                              SizedBox(
                                 height: 110, // Đã sửa lại từ 1110
                                 child: Row(
                                   children: [
                                     // chỗ này là số kcal đã hấp thụ
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          // số
+                                          Text(
+                                            '2000',
+                                            style: TextStyle(
+                                              color: htaPrimaryColors.shade500,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+
+                                          // chữ
+                                          Text(
+                                            'kcal consumed',
+                                            style: TextStyle(
+                                              color: htaPrimaryColors.shade500,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
                                     // chỗ này là cái pie chart remaining kcal
+                                    Expanded(
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 110 -
+                                                10, // Chiều cao cố định - đi radius
+                                            width: 110 -
+                                                10, // Chiều rộng cố định - đi radius
+                                            child: PieChart(
+                                              PieChartData(
+                                                sections: [
+                                                  PieChartSectionData(
+                                                    color: htaPrimaryColors
+                                                        .shade100,
+                                                    value: 2000,
+                                                    radius: 10,
+                                                    title: '',
+                                                  ),
+                                                  PieChartSectionData(
+                                                    color: htaPrimaryColors
+                                                        .shade500,
+                                                    value: 500,
+                                                    title: '',
+                                                    radius: 10,
+                                                  ),
+                                                ],
+                                                sectionsSpace: 0,
+                                                centerSpaceRadius: 35,
+                                              ),
+                                            ),
+                                          ),
+
+                                          // số
+                                          Text(
+                                            textAlign: TextAlign.center,
+                                            '1500' '\nremaining',
+                                            style: TextStyle(
+                                              color: htaPrimaryColors.shade500,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     // chỗ này là số kcal đã đốt
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          // số
+                                          Text(
+                                            '500',
+                                            style: TextStyle(
+                                              color: htaPrimaryColors.shade500,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+
+                                          // chữ
+                                          Text(
+                                            'kcal burned',
+                                            style: TextStyle(
+                                              color: htaPrimaryColors.shade500,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
