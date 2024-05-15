@@ -364,7 +364,7 @@ class _MyAccountState extends State<MyAccount> {
                                             Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                height.toString(),
+                                                height.toStringAsFixed(1),
                                                 style: TextStyle(
                                                   color:
                                                       htaPrimaryColors.shade900,
@@ -385,7 +385,7 @@ class _MyAccountState extends State<MyAccount> {
                                             Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                weight.toString(),
+                                                weight.toStringAsFixed(1),
                                                 style: TextStyle(
                                                   color:
                                                       htaPrimaryColors.shade900,
