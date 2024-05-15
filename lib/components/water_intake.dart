@@ -31,13 +31,13 @@ class _WaterIntakeState extends State<WaterIntake> {
 
   // Phương thức để đọc dữ liệu từ Firestore và cập nhật trạng thái của ứng dụng
   Future<void> _fetchWaterConsumedData() async {
-    String? email = await firestoreService.getCurrentUserUID();
-    if (email != null) {
-      bool hasData = await firestoreService.hasWaterConsumedData(email);
+    String? uid = await firestoreService.getCurrentUserUID();
+    if (uid != null) {
+      bool hasData = await firestoreService.hasWaterConsumedData(uid);
       List<int> waterData;
 
       if (hasData) {
-        waterData = await firestoreService.getWaterConsumedData(email);
+        waterData = await firestoreService.getWaterConsumedData(uid);
         // get được mấy ly nước đầy rồi thì add thêm ly nước trống phía sau
         waterData.add(0);
       } else {
@@ -52,6 +52,8 @@ class _WaterIntakeState extends State<WaterIntake> {
       // Xử lý khi không thể lấy được UID
     }
   }
+
+
 
   // Hàm tính lượng nước đã uống
   int calculateWaterIntake() {
@@ -169,9 +171,11 @@ class _WaterIntakeState extends State<WaterIntake> {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
+            // chỉnh lượgn nước mỗi ly
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // dấu trừ
                 GestureDetector(
                   onTap: () {
                     decreaseWaterPerCup();
@@ -182,12 +186,16 @@ class _WaterIntakeState extends State<WaterIntake> {
                     width: 60,
                   ),
                 ),
+
+                // lượng nước mỗi ly
                 Text(
                   '$waterPerCup ml per cup',
                   style: TextStyle(
                     color: htaPrimaryColors.shade500,
                   ),
                 ),
+
+                // dấu cộng
                 GestureDetector(
                   onTap: () {
                     increaseWaterPerCup();
@@ -200,41 +208,43 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ],
             ),
-            const SizedBox(height: 15),
+            const SizedBox(
+              height: 15,
+            ),
+            // mấy cái ly
             GridView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(), // Ngăn chặn cuộn
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: waterConsumed.length,
+              itemCount: waterConsumed.length, // Số lượng mục muốn hiển thị theo độ dài của waterConsumed
               itemBuilder: (BuildContext context, int index) {
-                if (index < waterConsumed.length) {
-                  return GestureDetector(
-                    onTap: () {
-                      toggleWaterConsumed(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Image(
-                          image: waterConsumed[index] != 0
-                              ? const AssetImage('assets/icons/cup_filled.png')
-                              : const AssetImage('assets/icons/cup_empty.png'),
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    toggleWaterConsumed(index);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Image(
+                        image: waterConsumed[index] != 0
+                            ? const AssetImage('assets/icons/cup_filled.png')
+                            : const AssetImage('assets/icons/cup_empty.png'),
                       ),
                     ),
-                  );
-                } else {
-                  return SizedBox(); // Trả về widget trống nếu chỉ mục không hợp lệ
-                }
+                  ),
+                );
               },
             ),
-            const SizedBox(height: 15),
+            const SizedBox(
+              height: 15,
+            ),
+            // Hiển thị lượng nước đã uống
             Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -246,7 +256,9 @@ class _WaterIntakeState extends State<WaterIntake> {
                 ),
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 15,),
+
+            // nut hien lich su uong nuoc
             Align(
               alignment: Alignment.centerRight,
               child: Button(
@@ -255,7 +267,7 @@ class _WaterIntakeState extends State<WaterIntake> {
                     context,
                     MaterialPageRoute(builder: (context) => WaterHistory()),
                   );
-                },
+                }, 
                 title: 'Show history',
                 height: 40,
                 width: 120,

@@ -226,8 +226,8 @@ class FirestoreService {
     // Kiểm tra xem người dùng đã đăng nhập chưa
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Nếu người dùng đã đăng nhập, trả về mail của họ
-      return user.email;
+      // Nếu người dùng đã đăng nhập, trả về UID của họ
+      return user.uid;
     } else {
       // Nếu không có người dùng nào đăng nhập, trả về null
       return null;
