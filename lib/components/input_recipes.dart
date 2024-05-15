@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app3/pages/recipes.dart';
 import 'package:app3/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,8 @@ class InputRecipes extends StatelessWidget {
                     ),
                   );
                   // Điều hướng trở lại trang PlanPage
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RecipePage()));
                 },
                 child: const Text("Delete"),
               ),
