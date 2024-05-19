@@ -3,81 +3,83 @@ import 'dart:io';
 import 'package:app3/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/plan.dart';
-import '../models/recipe.dart';
-import '../models/newsRecipe.dart';
 import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
 
-String? imagePath;
+class Inputplans extends StatefulWidget {
+  final String? planId;
+  final VoidCallback? createPlan;
 
-class Inputplans extends StatelessWidget {
-  Inputplans({super.key, this.createPlan, this.planId});
+  const Inputplans({super.key, this.planId, this.createPlan});
+
+  @override
+  _InputplansState createState() => _InputplansState();
+}
+
+class _InputplansState extends State<Inputplans> {
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController timeFundController = TextEditingController();
   final TextEditingController idController = TextEditingController();
-  final String? planId;
-  final VoidCallback? createPlan;
-  final CollectionReference _reference =
-      FirebaseFirestore.instance.collection('plans');
   String imageUrl = '';
-  // late Plan plan;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.planId != null) {
+      _getPlanById();
+    }
+  }
+
   Future<void> _pickImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-    print('${file?.path}');
-
     if (file == null) return;
+
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    // Step 2: upload to firebase storage
-    // install firebase_storage
-    // import the library
-
-    // get a reference to storage root
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages = referenceRoot.child('images');
-
-    // create a reference for the image to be stored
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
 
-    //handle errors/success
     try {
-      //Store the file
       await referenceImageToUpload.putFile(File(file.path));
-      //Success: get the download URL
-      imageUrl = await referenceImageToUpload.getDownloadURL();
+      String downloadUrl = await referenceImageToUpload.getDownloadURL();
+      setState(() {
+        imageUrl = downloadUrl;
+      });
     } catch (error) {
-      //some error occurred
+      // Handle errors
     }
   }
 
   void _deletePlan(BuildContext context, String id) {
-    // Đảm bảo rằng recipeId không null trước khi xóa
     if (id.isNotEmpty) {
-      // Xác nhận xóa
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text("Confirm"),
-            content: const Text("Are you sure you want to delete this recipe?"),
+            content: const Text("Are you sure you want to delete this plan?"),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Đóng hộp thoại
+                  Navigator.pop(context);
                 },
                 child: const Text("Cancel"),
               ),
               TextButton(
                 onPressed: () {
                   firestoreService.deletePlan(id);
-                  Navigator.pop(context); // Đóng hộp thoại
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Plan deleted'),
+                    ),
+                  );
                 },
                 child: const Text("Delete"),
               ),
@@ -86,12 +88,10 @@ class Inputplans extends StatelessWidget {
         },
       );
     }
-    Navigator.pop(context);
   }
 
-  Future<void> updateRecipe(BuildContext context, String id) async {
+  Future<void> updatePlan(BuildContext context, String id) async {
     if (id.isNotEmpty) {
-      // Xác nhận xóa
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -101,7 +101,7 @@ class Inputplans extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Đóng hộp thoại
+                  Navigator.pop(context);
                 },
                 child: const Text("Cancel"),
               ),
@@ -112,13 +112,11 @@ class Inputplans extends StatelessWidget {
                       descriptionController.text,
                       imageUrl,
                       timeFundController.text);
-                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Plan updated'),
                     ),
                   );
-                  // Điều hướng trở lại trang PlanPage
                   Navigator.pop(context);
                 },
                 child: const Text("Update"),
@@ -134,8 +132,7 @@ class Inputplans extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  Future<void> _createRecipe(BuildContext context) async {
-    // Get values from controllers and image path
+  Future<void> _createPlan(BuildContext context) async {
     final String description = descriptionController.text;
     final String timeFund = timeFundController.text;
     final String id = idController.text;
@@ -154,42 +151,35 @@ class Inputplans extends StatelessWidget {
 
   Future<DocumentSnapshot<Map<String, dynamic>>?> getPlanById(String id) async {
     try {
-      // Thực hiện truy vấn để lấy tài liệu từ Firestore dựa trên trường 'id' và giá trị cụ thể
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
               .collection('plans')
               .where('id', isEqualTo: id)
-              .limit(1) // Giới hạn số lượng tài liệu trả về chỉ cần 1 document
+              .limit(1)
               .get();
 
-      // Nếu có tài liệu phù hợp, trả về document đầu tiên
       if (querySnapshot.docs.isNotEmpty) {
         return querySnapshot.docs.first;
       } else {
-        // Nếu không có tài liệu phù hợp, trả về null
         return null;
       }
     } catch (e) {
-      // Xử lý nếu có lỗi xảy ra trong quá trình truy vấn Firestore
       print('Error getting plan by id: $e');
       return null;
     }
   }
 
   Future<void> _getPlanById() async {
-    idController.text = planId!;
-    // Plan plan;
+    idController.text = widget.planId!;
     DocumentSnapshot<Map<String, dynamic>>? planDocument =
         await getPlanById(idController.text);
     if (planDocument != null) {
-      // Xử lý khi tìm thấy document
-      print('Found plan document');
-      descriptionController.text = planDocument['description'];
-      timeFundController.text = planDocument['timeFund'];
-      imagePath = planDocument['imagePath'];
-      // print(imagePath);
+      setState(() {
+        descriptionController.text = planDocument['description'];
+        timeFundController.text = planDocument['timeFund'];
+        imageUrl = planDocument['imagePath'];
+      });
     } else {
-      // Xử lý khi không tìm thấy document
       print('Plan document with id "001" not found.');
     }
   }
@@ -197,9 +187,7 @@ class Inputplans extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    if (planId != null) {
-      _getPlanById();
-    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFE9F0F5),
       body: SingleChildScrollView(
@@ -238,7 +226,9 @@ class Inputplans extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
-                    imagePath ?? 'placeholder_image_path.png',
+                    imageUrl.isNotEmpty
+                        ? imageUrl
+                        : 'placeholder_image_path.png',
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
@@ -307,7 +297,7 @@ class Inputplans extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () => _createRecipe(context),
+                      onPressed: () => _createPlan(context),
                       icon: const Icon(
                         Icons.add,
                         color: Color(0xFF4D8BAA),
@@ -323,7 +313,7 @@ class Inputplans extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () => updateRecipe(context, idController.text),
+                      onPressed: () => updatePlan(context, idController.text),
                       icon: const Icon(
                         Icons.edit,
                         color: Color(0xFF4D8BAA),
@@ -335,9 +325,7 @@ class Inputplans extends StatelessWidget {
                       icon: const Icon(Icons.add_a_photo),
                       color: const Color(0xFF4D8BAA),
                     ),
-                    const SizedBox(
-                      width: 25,
-                    )
+                    const SizedBox(width: 25),
                   ],
                 ),
               ),

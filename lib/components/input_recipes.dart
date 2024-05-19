@@ -13,19 +13,33 @@ import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
 
-String? imagePath;
+class InputRecipes extends StatefulWidget {
+  const InputRecipes({super.key, this.createRecipe, this.recipeId});
 
-class InputRecipes extends StatelessWidget {
-  InputRecipes({super.key, this.createRecipe, this.recipeId});
+  final VoidCallback? createRecipe;
+  final String? recipeId;
+
+  @override
+  _InputRecipesState createState() => _InputRecipesState();
+}
+
+class _InputRecipesState extends State<InputRecipes> {
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
   final TextEditingController idController = TextEditingController();
-  final String? recipeId;
-  final VoidCallback? createRecipe;
+
   final CollectionReference _reference =
       FirebaseFirestore.instance.collection('recipes');
   String imageUrl = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.recipeId != null) {
+      _getRecipeById();
+    }
+  }
 
   Future<void> _pickImage() async {
     ImagePicker imagePicker = ImagePicker();
@@ -35,26 +49,18 @@ class InputRecipes extends StatelessWidget {
     if (file == null) return;
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    // Step 2: upload to firebase storage
-    // install firebase_storage
-    // import the library
-
-    // get a reference to storage root
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages = referenceRoot.child('images');
-
-    // create a reference for the image to be stored
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
 
-    //handle errors/success
     try {
-      //Store the file
       await referenceImageToUpload.putFile(File(file.path));
-      //Success: get the download URL
-      imageUrl = await referenceImageToUpload.getDownloadURL();
-      imagePath = imageUrl;
+      String downloadUrl = await referenceImageToUpload.getDownloadURL();
+      setState(() {
+        imageUrl = downloadUrl;
+      });
     } catch (error) {
-      //some error occurred
+      // Handle errors
     }
   }
 
@@ -63,7 +69,6 @@ class InputRecipes extends StatelessWidget {
   }
 
   Future<void> _createRecipe(BuildContext context) async {
-    // Get values from controllers and image path
     final String description = descriptionController.text;
     final String detail = detailController.text;
     final String id = idController.text;
@@ -71,7 +76,6 @@ class InputRecipes extends StatelessWidget {
     if (imageUrl.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Please upload an image')));
-      imagePath = imageUrl;
       return;
     }
 
@@ -82,9 +86,7 @@ class InputRecipes extends StatelessWidget {
   }
 
   void _deleteRecipe(BuildContext context, String id) {
-    // Đảm bảo rằng recipeId không null trước khi xóa
     if (id.isNotEmpty) {
-      // Xác nhận xóa
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -94,7 +96,7 @@ class InputRecipes extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Đóng hộp thoại
+                  Navigator.pop(context);
                 },
                 child: const Text("Cancel"),
               ),
@@ -102,13 +104,11 @@ class InputRecipes extends StatelessWidget {
                 onPressed: () {
                   firestoreService.deleteRecipe(id);
                   Navigator.pop(context);
-                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Recipe deleted'),
                     ),
                   );
-                  // Điều hướng trở lại trang PlanPage
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => RecipePage()));
                 },
@@ -123,7 +123,6 @@ class InputRecipes extends StatelessWidget {
 
   Future<void> updateRecipe(BuildContext context, String id) async {
     if (id.isNotEmpty) {
-      // Xác nhận xóa
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -133,7 +132,7 @@ class InputRecipes extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Đóng hộp thoại
+                  Navigator.pop(context);
                 },
                 child: const Text("Cancel"),
               ),
@@ -146,13 +145,11 @@ class InputRecipes extends StatelessWidget {
                       detailController.text,
                       false,
                       "");
-                  // Thông báo khi AlertDialog đã đóng và điều hướng trở lại trang PlanPage
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Recipe updated'),
                     ),
                   );
-                  // Điều hướng trở lại trang PlanPage
                   Navigator.pop(context);
                 },
                 child: const Text("Update"),
@@ -167,42 +164,35 @@ class InputRecipes extends StatelessWidget {
   Future<DocumentSnapshot<Map<String, dynamic>>?> getRecipeById(
       String id) async {
     try {
-      // Thực hiện truy vấn để lấy tài liệu từ Firestore dựa trên trường 'id' và giá trị cụ thể
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
               .collection('recipes')
               .where('id', isEqualTo: id)
-              .limit(1) // Giới hạn số lượng tài liệu trả về chỉ cần 1 document
+              .limit(1)
               .get();
 
-      // Nếu có tài liệu phù hợp, trả về document đầu tiên
       if (querySnapshot.docs.isNotEmpty) {
         return querySnapshot.docs.first;
       } else {
-        // Nếu không có tài liệu phù hợp, trả về null
         return null;
       }
     } catch (e) {
-      // Xử lý nếu có lỗi xảy ra trong quá trình truy vấn Firestore
       print('Error getting plan by id: $e');
       return null;
     }
   }
 
   Future<void> _getRecipeById() async {
-    idController.text = recipeId!;
-    // Plan plan;
-    DocumentSnapshot<Map<String, dynamic>>? planDocument =
+    idController.text = widget.recipeId!;
+    DocumentSnapshot<Map<String, dynamic>>? recipeDocument =
         await getRecipeById(idController.text);
-    if (planDocument != null) {
-      // Xử lý khi tìm thấy document
-      print('Found Recipes document');
-      descriptionController.text = planDocument['description'];
-      detailController.text = planDocument['detail'];
-      imagePath = planDocument['imagePath'];
-      // print(imagePath);
+    if (recipeDocument != null) {
+      setState(() {
+        descriptionController.text = recipeDocument['description'];
+        detailController.text = recipeDocument['detail'];
+        imageUrl = recipeDocument['imagePath'];
+      });
     } else {
-      // Xử lý khi không tìm thấy document
       print('Recipes document with id "001" not found.');
     }
   }
@@ -210,9 +200,7 @@ class InputRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    if (recipeId != null) {
-      _getRecipeById();
-    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFE9F0F5),
       body: SingleChildScrollView(
@@ -230,7 +218,9 @@ class InputRecipes extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
-                    recipeId != null ? "Your Recipes" : "Create new recipe!",
+                    widget.recipeId != null
+                        ? "Your Recipes"
+                        : "Create new recipe!",
                     style: const TextStyle(
                       fontSize: 40,
                       color: Color(0xFF4D8BAA),
@@ -251,7 +241,9 @@ class InputRecipes extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
-                    imagePath ?? 'placeholder_image_path.png',
+                    imageUrl.isNotEmpty
+                        ? imageUrl
+                        : 'placeholder_image_path.png',
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
