@@ -310,8 +310,8 @@ class InputRecipes extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const SizedBox(width: 25),
                     IconButton(
                       onPressed: () => _onBackPressed(context),
                       icon: const Icon(
@@ -319,7 +319,6 @@ class InputRecipes extends StatelessWidget {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: () => _createRecipe(context),
                       icon: const Icon(
@@ -327,7 +326,6 @@ class InputRecipes extends StatelessWidget {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: () =>
                           _deleteRecipe(context, idController.text),
@@ -336,7 +334,6 @@ class InputRecipes extends StatelessWidget {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: () => updateRecipe(context, idController.text),
                       icon: const Icon(
@@ -344,15 +341,11 @@ class InputRecipes extends StatelessWidget {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: _pickImage,
                       icon: const Icon(Icons.add_a_photo),
                       color: const Color(0xFF4D8BAA),
                     ),
-                    const SizedBox(
-                      width: 25,
-                    )
                   ],
                 ),
               ),
