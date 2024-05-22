@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../pages/planpage.dart';
 import '../styles/box_shadow.dart';
 import 'button.dart';
 import 'text_field.dart';
@@ -74,7 +75,8 @@ class _InputplansState extends State<Inputplans> {
               TextButton(
                 onPressed: () {
                   firestoreService.deletePlan(id);
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PlanPage()));
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Plan deleted'),
