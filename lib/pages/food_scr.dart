@@ -15,7 +15,6 @@ class FoodScreen extends StatefulWidget {
 
 class _FoodScreenState extends State<FoodScreen> {
   double consumedValue = 0;
-  double burnedValue = 0;
   double previousConsumedValue = 0; // Giá trị đã lưu trước đó
 
   List<Map<String, dynamic>> foods = [

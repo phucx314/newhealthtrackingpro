@@ -4,6 +4,7 @@ import 'package:app3/colors/color_set.dart';
 import 'package:app3/components/history_item.dart';
 import 'package:app3/models/history_item.dart';
 import 'package:app3/components/water_history_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,6 +16,21 @@ class WaterHistory extends StatefulWidget {
 }
 
 class _WaterHistoryState extends State<WaterHistory> {
+
+  final CollectionReference waterHistory = FirebaseFirestore.instance.collection('water_history');
+
+  Future<void> addWaterIntakeToHistory(String uid, int totalWaterConsumed, String date) async {
+    await waterHistory.add({
+      'uid': uid,
+      'totalWaterConsumed': totalWaterConsumed,
+      'date': date,
+    });
+  }
+
+  Stream<QuerySnapshot> getWaterHistoryStream(String uid) {
+    return waterHistory.where('uid', isEqualTo: uid).orderBy('date', descending: true).snapshots();
+  }
+
   
   @override
   Widget build(BuildContext context) {

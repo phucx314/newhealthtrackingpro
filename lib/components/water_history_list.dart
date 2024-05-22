@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:app3/components/history_item.dart';
 import 'package:flutter/material.dart';
+import '../services/firestore.dart';
 
 class HistoryList extends StatefulWidget {
   @override
@@ -8,89 +8,26 @@ class HistoryList extends StatefulWidget {
 }
 
 class _HistoryListState extends State<HistoryList> {
-  List<Map<Object, dynamic>> historyData = [
-    {
-      "historyID": "20240507",
-      "consumptionAmount": 2000,
-      "date": "Tue - May 07, 2024"
-    },
-    {
-      "historyID": "20240508",
-      "consumptionAmount": 1250,
-      "date": "Wed - May 08, 2024"
-    },
-    {
-    "historyID": "20240509",
-    "consumptionAmount": 1897,
-    "date": "Thu - May 09, 2024"
-  },
-  {
-    "historyID": "20240510",
-    "consumptionAmount": 727,
-    "date": "Fri - May 10, 2024"
-  },
-  {
-    "historyID": "20240511",
-    "consumptionAmount": 1549,
-    "date": "Sat - May 11, 2024"
-  },
-  {
-    "historyID": "20240512",
-    "consumptionAmount": 295,
-    "date": "Sun - May 12, 2024"
-  },
-  {
-    "historyID": "20240513",
-    "consumptionAmount": 1229,
-    "date": "Mon - May 13, 2024"
-  },
-  {
-    "historyID": "20240514",
-    "consumptionAmount": 1763,
-    "date": "Tue - May 14, 2024"
-  },
-  {
-    "historyID": "20240515",
-    "consumptionAmount": 850,
-    "date": "Wed - May 15, 2024"
-  },
-  {
-    "historyID": "20240516",
-    "consumptionAmount": 3913,
-    "date": "Thu - May 16, 2024"
-  },
-  {
-    "historyID": "20240517",
-    "consumptionAmount": 2275,
-    "date": "Fri - May 17, 2024"
-  },
-  {
-    "historyID": "20240518",
-    "consumptionAmount": 1734,
-    "date": "Sat - May 18, 2024"
-  },
-  {
-    "historyID": "20240519",
-    "consumptionAmount": 2282,
-    "date": "Sun - May 19, 2024"
-  },
-  {
-    "historyID": "20240520",
-    "consumptionAmount": 1864,
-    "date": "Mon - May 20, 2024"
-  },
-  {
-    "historyID": "20240521",
-    "consumptionAmount": 316,
-    "date": "Tue - May 21, 2024"
-  },
-  {
-    "historyID": "20240522",
-    "consumptionAmount": 2131,
-    "date": "Wed - May 22, 2024"
+  List<Map<String, dynamic>> historyData = [];
+  final FirestoreService firestoreService = FirestoreService();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchHistoryData();
   }
-    // Add more items as needed
-  ];
+
+  Future<void> _fetchHistoryData() async {
+    String? uid = await firestoreService.getCurrentUserUID();
+    if (uid != null) {
+      List<Map<String, dynamic>> data = await firestoreService.getWaterHistory(uid);
+      setState(() {
+        historyData = data;
+      });
+    } else {
+      // Handle user not logged in
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +41,7 @@ class _HistoryListState extends State<HistoryList> {
               consumptionAmount: historyData[index]['consumptionAmount'],
               historyItemID: historyData[index]['historyID'],
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
           ],
         );
       },

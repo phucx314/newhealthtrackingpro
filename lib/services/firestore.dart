@@ -280,4 +280,43 @@ class FirestoreService {
       throw Exception('Error fetching water consumed data: $error');
     }
   }
+
+
+  // WATER HISTORY
+  final CollectionReference waterHistory = FirebaseFirestore.instance.collection('water_cnsumption_history');
+
+  Future<List<Map<String, dynamic>>> getWaterHistory(String uid) async {
+    try {
+      QuerySnapshot querySnapshot = await waterHistory
+          .where('uid', isEqualTo: uid)
+          .orderBy('date', descending: true)
+          .get();
+      List<Map<String, dynamic>> historyData = [];
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        historyData.add(data);
+      }
+      return historyData;
+    } catch (error) {
+      throw Exception('Error fetching water history data: $error');
+    }
+  }
+
+  Future<void> addWaterHistory(
+    String uid,
+    int consumptionAmount,
+    String date,
+  ) async {
+    await waterHistory.add({
+      'uid': uid,
+      'consumptionAmount': consumptionAmount,
+      'date': date,
+    });
+  }
+
+  // FOODS DRINKS CONSUMPTION
+  
+
+  // BURN KCAL
+
 }

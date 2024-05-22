@@ -10,10 +10,10 @@ import 'package:fl_chart/fl_chart.dart';
 
 class ActivityScreen extends StatefulWidget {
   @override
-    _FoodScreenState createState() => _FoodScreenState();
+    _ActivityScreenState createState() => _ActivityScreenState();
   }
 
-class _FoodScreenState extends State<ActivityScreen> {
+class _ActivityScreenState extends State<ActivityScreen> {
   double burnedValue = 0;
   double previousBurnedValue = 0;
 
@@ -163,11 +163,11 @@ class _FoodScreenState extends State<ActivityScreen> {
   @override
   void initState() {
     super.initState();
-    // Lấy giá trị consumedValue từ Firestore khi màn hình được khởi tạo
+    // Lấy giá trị burnedValue từ Firestore khi màn hình được khởi tạo
     getBurnedValueFromFirestore();
   }
 
-  // Hàm để lấy giá trị consumedValue từ Firestore
+  // Hàm để lấy giá trị burnedValue từ Firestore
   void getBurnedValueFromFirestore() async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
@@ -183,11 +183,11 @@ class _FoodScreenState extends State<ActivityScreen> {
         }
       }
     } catch (e) {
-      print('Error getting activities: $e');
+      print('Error getting burned value: $e');
     }
   }
 
-  // Hàm để cập nhật giá trị consumedValue vào Firestore
+  // Hàm để cập nhật giá trị burnedValue vào Firestore
   void updateBurnedValueToFirestore(double burnedValue) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
@@ -202,11 +202,11 @@ class _FoodScreenState extends State<ActivityScreen> {
     }
   }
 
-  // Hàm để cập nhật giá trị consumedValue và foods
+  // Hàm để cập nhật giá trị burnedValue và activities
   void updateBurnedValue() {
     double burned = 0;
     for (var activity in activities) {
-      burned += activity['calories'] * activity['duration'];
+      burned += activity['kcalPerMinute'] * activity['duration'];
     }
     setState(() {
       burnedValue = burned + previousBurnedValue; // Cộng với giá trị đã lưu trước đó
@@ -222,7 +222,7 @@ class _FoodScreenState extends State<ActivityScreen> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              // Cập nhật giá trị consumedValue vào Firestore khi bấm nút Save
+              // Cập nhật giá trị burnedValue vào Firestore khi bấm nút Save
               updateBurnedValueToFirestore(burnedValue);
             },
           ),
@@ -271,6 +271,9 @@ class _FoodScreenState extends State<ActivityScreen> {
                             SizedBox(width: 10),
                             Button(
                               onTap: () {
+                                // setState(() {
+                                //   activities[index]['duration'] += 1; // Increase the duration by 1
+                                // });
                                 updateBurnedValue(); // Cập nhật giá trị burnedValue
                               },
                               title: '+',

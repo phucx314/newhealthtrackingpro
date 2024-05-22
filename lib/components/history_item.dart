@@ -82,7 +82,7 @@ class HistoryItem extends StatelessWidget {
                 'You have consumed',
               ),
               Text(
-                consumptionAmount.toString(),
+                '${(consumptionAmount).toString()} ml',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
