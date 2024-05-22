@@ -15,7 +15,7 @@ import 'components/tip2.dart';
 import 'components/tip3.dart';
 import 'components/tip4.dart';
 import 'pages/recipes.dart';
-
+//
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
