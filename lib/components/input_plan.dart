@@ -288,8 +288,8 @@ class _InputplansState extends State<Inputplans> {
                   color: Colors.white,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    const SizedBox(width: 25),
                     IconButton(
                       onPressed: () => _onBackPressed(context),
                       icon: const Icon(
@@ -297,6 +297,7 @@ class _InputplansState extends State<Inputplans> {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
+                    const Spacer(),
                     IconButton(
                       onPressed: () => _createPlan(context),
                       icon: const Icon(
@@ -304,6 +305,7 @@ class _InputplansState extends State<Inputplans> {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
+                    const Spacer(),
                     IconButton(
                       onPressed: () => _deletePlan(context, idController.text),
                       icon: const Icon(
@@ -311,6 +313,7 @@ class _InputplansState extends State<Inputplans> {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
+                    const Spacer(),
                     IconButton(
                       onPressed: () => updatePlan(context, idController.text),
                       icon: const Icon(
@@ -318,12 +321,13 @@ class _InputplansState extends State<Inputplans> {
                         color: Color(0xFF4D8BAA),
                       ),
                     ),
+                    const SizedBox(width: 25),
                     IconButton(
                       onPressed: _pickImage,
                       icon: const Icon(Icons.add_a_photo),
                       color: const Color(0xFF4D8BAA),
                     ),
-                    //const SizedBox(width: 25),
+                    const SizedBox(width: 25),
                   ],
                 ),
               ),
